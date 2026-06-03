@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Sadaka{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'branding/favicon.png' %}?v=20260520-06">
+    <link rel="apple-touch-icon" href="{% static 'branding/favicon.png' %}?v=20260520-06">
+    <link rel="stylesheet" href="{% static 'landing/landing.css' %}?v=20260520-06">
+</head>
+<body>
+{% block content %}{% endblock %}
+<div class="cookie-banner" data-cookie-banner hidden>
+    <div class="cookie-banner__content">
+        <div>
+            <strong>Мы используем cookies</strong>
+            <p>Они нужны для входа в аккаунт, сохранения сессии и базовых настроек сайта.</p>
+        </div>
+        <div class="cookie-banner__actions">
+            <button class="button secondary" type="button" data-cookie-accept>Принять</button>
+            <button class="button ghost" type="button" data-cookie-close>Закрыть</button>
+        </div>
+    </div>
+</div>
+<div class="mosque-widget" data-mosque-widget-root>
+    <button class="mosque-widget-toggle has-icon icon-mosque" type="button" data-mosque-widget-open aria-haspopup="dialog" aria-controls="mosque-widget-dialog" aria-expanded="false" aria-label="Добавить мечеть" title="Добавить мечеть">
+        <span>Добавить мечеть</span>
+    </button>
+    <div class="mosque-widget-overlay" hidden data-mosque-widget-overlay></div>
+    <section class="mosque-widget-dialog" id="mosque-widget-dialog" hidden data-mosque-widget-dialog aria-labelledby="mosque-widget-title" aria-modal="true" role="dialog">
+        <div class="mosque-widget-head">
+            <div>
+                <div class="mosque-widget-kicker">Онлайн-обращение</div>
+                <h2 id="mosque-widget-title">Добавить мечеть</h2>
+                <p>Оставьте заявку, и мы отправим её администратору для проверки и связи.</p>
+            </div>
+            <button class="mosque-widget-close" type="button" data-mosque-widget-close aria-label="Закрыть форму">×</button>
+        </div>
+        <form class="mosque-widget-form" method="post" action="{% url 'platform:mosque-widget-request' %}" data-mosque-widget-form novalidate>
+            {% csrf_token %}
+            <div class="mosque-widget-caption">
+                Обязательные поля: название мечети, город и телефон для связи.
+            </div>
+            <div class="mosque-widget-grid">
+                <div class="field">
+                    <label for="{{ mosque_widget_form.mosque_name.id_for_label }}">Название мечети <span aria-hidden="true">*</span></label>
+                    {{ mosque_widget_form.mosque_name }}
+                    <div class="field-error" data-field-error="mosque_name" hidden></div>
+                </div>
+                <div class="field">
+                    <label for="{{ mosque_widget_form.city.id_for_label }}">Город / населённый пункт <span aria-hidden="true">*</span></label>
+                    {{ mosque_widget_form.city }}
+                    <div class="field-error" data-field-error="city" hidden></div>
+                </div>
+                <div class="field">
+                    <label for="{{ mosque_widget_form.contact.id_for_label }}">Телефон для связи <span aria-hidden="true">*</span></label>
+                    {{ mosque_widget_form.contact }}
+                    <div class="field-error" data-field-error="contact" hidden></div>
+                </div>
+                <div class="field">
+                    <label for="{{ mosque_widget_form.applicant_name.id_for_label }}">Имя заявителя</label>
+                    {{ mosque_widget_form.applicant_name }}
+                    <div class="field-error" data-field-error="applicant_name" hidden></div>
+                </div>
+                <div class="field field-full">
+                    <label for="{{ mosque_widget_form.comment.id_for_label }}">Комментарий</label>
+                    {{ mosque_widget_form.comment }}
+                    <div class="field-error" data-field-error="comment" hidden></div>
+                </div>
+            </div>
+            <div class="mosque-widget-status" data-mosque-widget-status aria-live="polite" role="status"></div>
+            <div class="mosque-widget-actions">
+                <button class="button primary mosque-widget-submit" type="submit" data-mosque-widget-submit>Отправить заявку</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% include "landing/_footer.html" %}
+<script src="{% static 'landing/landing.js' %}?v=20260520-06"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends "landing/base.html" %}
+
+{% block title %}{{ page_title }} · Sadaka{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell checkout-shell">
+    {% include "landing/_page_shell.html" with section_id="top" hero_title=page_title hero_description="Укажите имя для оформления поддержки. Email можно оставить пустым." %}
+
+    <section class="section landing-section checkout-section">
+            <div class="landing-section-panel">
+            <div class="section-head centered">
+                <div class="eyebrow">Ежемесячная поддержка</div>
+                <p>Укажите имя для оформления поддержки. Email можно оставить пустым.</p>
+            </div>
+
+            {% if messages %}
+                <div class="message-stack">
+                    {% for message in messages %}
+                        <div class="message success">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form class="checkout-card" method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="message error">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="field">
+                    <label for="{{ form.mosque.id_for_label }}">Мечеть</label>
+                    {{ form.mosque }}
+                    {% for error in form.mosque.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="field">
+                    <label for="{{ form.amount.id_for_label }}">Сумма</label>
+                    {{ form.amount }}
+                    {% for error in form.amount.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="field">
+                    <label class="field-label-with-hint" for="{{ form.full_name.id_for_label }}">
+                        <span>Имя и фамилия</span>
+                        <span
+                            class="field-label-hint"
+                            tabindex="0"
+                            aria-label="Личные данные можно заполнить в профиле"
+                            title="Личные данные можно заполнить в профиле"
+                        >!</span>
+                    </label>
+                    {{ form.full_name }}
+                    {% for error in form.full_name.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="field">
+                    <label class="field-label-with-hint" for="{{ form.email.id_for_label }}">
+                        <span>Email</span>
+                        <span
+                            class="field-label-hint"
+                            tabindex="0"
+                            aria-label="Необязательное поле."
+                            title="Необязательное поле."
+                        >!</span>
+                    </label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                </div>
+                <button class="button primary full-width" type="submit">{{ submit_label }}</button>
+                <a class="button ghost centered-button" href="{% url 'platform:landing' %}">Вернуться на главную</a>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

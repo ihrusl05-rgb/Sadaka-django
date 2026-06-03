@@ -1,0 +1,352 @@
+{% extends "landing/base.html" %}
+{% load static humanize %}
+
+{% block title %}{{ mosque.name }} · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell mosque-detail-shell">
+    {% include "landing/_page_shell.html" with section_id="top" %}
+
+    <section class="section mosque-detail-section">
+        <div class="breadcrumbs">
+            <a href="{% url 'platform:landing' %}">Главная</a>
+            <span>/</span>
+            <a href="{% url 'platform:mosques' %}">Мечети</a>
+            <span>/</span>
+            <span>{{ mosque.name }}</span>
+        </div>
+
+        {% if messages %}
+            <div class="message-stack">
+                {% for message in messages %}
+                    <div class="message success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <article class="mosque-hero-card"{% if mosque.cover_image %} style="--hero-image: url('{{ mosque.cover_image.url }}');"{% endif %}>
+            <div class="mosque-hero-copy">
+                <h1>{{ mosque.name }}</h1>
+                <div class="mosque-location">
+                    {% if mosque.city %}{{ mosque.city }}{% endif %}{% if mosque.city and mosque.address %} · {% endif %}{% if mosque.address %}{{ mosque.address }}{% endif %}
+                </div>
+                <p class="mosque-hero-description">
+                    {% if mosque.public_story %}
+                        {{ mosque.public_story|truncatechars:260 }}
+                    {% else %}
+                        {{ mosque.description|truncatechars:260 }}
+                    {% endif %}
+                </p>
+
+                <div class="mosque-hero-actions">
+                    <a class="button primary" href="?support=1" data-open-support-modal>Поддержать</a>
+                    <a class="button secondary hero-project-link" href="#projects">Открыть проекты</a>
+                </div>
+
+                <div class="hero-progress-summary">
+                    <div class="hero-progress-card">
+                        <span>Нужно</span>
+                        <strong>{{ goal_total|floatformat:0|intcomma }} ₽</strong>
+                    </div>
+                    <div class="hero-progress-card">
+                        <span>Собрали</span>
+                        <strong>{{ collected_total|floatformat:0|intcomma }} ₽</strong>
+                    </div>
+                </div>
+
+                <div class="hero-progress-bar">
+                    <span style="width: {{ progress_percent }}%"></span>
+                </div>
+                <div class="hero-progress-foot">
+                    <span>{{ progress_percent }}% от цели</span>
+                    <span>Осталось {{ remaining_total|floatformat:0|intcomma }} ₽</span>
+                </div>
+            </div>
+        </article>
+
+        <div class="mosque-detail-main">
+            <div class="detail-content-grid">
+                <div class="detail-main-column">
+                <section class="detail-card" id="about">
+                    <div class="section-split detail-section-head">
+                        <div>
+                            <h2>О мечети</h2>
+                            <p>Публичная информация о мечети, контакты и базовые данные для жертвователей.</p>
+                        </div>
+                        <a class="button secondary has-icon icon-telegram detail-support-link" href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Написать в поддержку</a>
+                    </div>
+
+                    <div class="mosque-about-grid">
+                        <div>
+                            <div class="story-copy is-collapsed" data-expandable-text>
+                                <p>{{ mosque.description }}</p>
+                                {% if mosque.public_story %}
+                                    <p>{{ mosque.public_story|linebreaksbr }}</p>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="button ghost detail-toggle" data-expandable-toggle hidden>Полное описание</button>
+                        </div>
+
+                        <div class="about-meta-grid">
+                            <article class="about-meta-card">
+                                <span>Город</span>
+                                <strong>{{ mosque.city|default:"Не указан" }}</strong>
+                            </article>
+                            <article class="about-meta-card">
+                                <span>Адрес</span>
+                                <strong>{{ mosque.address|default:"Уточняется" }}</strong>
+                            </article>
+                            <article class="about-meta-card">
+                                <span>Телефон</span>
+                                <strong>{{ mosque.contact_phone|default:"Не указан" }}</strong>
+                            </article>
+                            <article class="about-meta-card">
+                                <span>Email</span>
+                                <strong>{{ mosque.contact_email|default:"Не указан" }}</strong>
+                            </article>
+                            <article class="about-meta-card">
+                                <span>Администратор</span>
+                                <strong><a href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">@{{ site_meta.support_bot_username }}</a></strong>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="detail-card" id="projects">
+                    <div class="section-split detail-section-head">
+                        <div>
+                            <h2>Проекты</h2>
+                            <p>Актуальные сборы мечети с прогрессом и возможностью адресной поддержки.</p>
+                        </div>
+                        {% if active_projects %}
+                            <div class="detail-count-badge">{{ active_projects_total }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if active_projects %}
+                        <div class="project-list detail-project-grid">
+                            {% for project_item in active_projects %}
+                                <article class="project-card{% if project_item.is_featured %} is-featured{% endif %}">
+                                    {% if project_item.cover_image_url %}
+                                        <div class="project-card-cover">
+                                            <img src="{{ project_item.cover_image_url }}" alt="{{ project_item.title }}" loading="lazy">
+                                        </div>
+                                    {% endif %}
+                                    <div class="project-card-head">
+                                        <div>
+                                            <div class="project-card-kicker">
+                                                {% if project_item.is_featured %}Главный проект{% else %}Проект {{ forloop.counter|stringformat:"02d" }}{% endif %}
+                                            </div>
+                                            <h3>{{ project_item.title }}</h3>
+                                        </div>
+                                        <span class="project-card-status">{{ project_item.status_label }}</span>
+                                    </div>
+                                    <p class="project-card-description">{{ project_item.description }}</p>
+                                    <div class="project-card-stats">
+                                        <div>
+                                            <span>Нужно</span>
+                                            <strong>{{ project_item.goal_amount|floatformat:0|intcomma }} ₽</strong>
+                                        </div>
+                                        <div>
+                                            <span>Собрано</span>
+                                            <strong>{{ project_item.current_amount|floatformat:0|intcomma }} ₽</strong>
+                                        </div>
+                                    </div>
+                                    <div class="hero-progress-bar project-progress-bar">
+                                        <span style="width: {{ project_item.progress_percent }}%"></span>
+                                    </div>
+                                    <div class="hero-progress-foot project-progress-foot">
+                                        <span>{{ project_item.progress_percent }}% от цели</span>
+                                        <span>Осталось {{ project_item.remaining_amount|floatformat:0|intcomma }} ₽</span>
+                                    </div>
+                                    <div class="project-card-actions">
+                                        <a
+                                            class="button primary"
+                                            href="?support=1&project={{ project_item.id }}&amount={{ quick_amounts.2 }}"
+                                            data-open-support-modal
+                                            data-support-project="{{ project_item.id }}"
+                                            data-support-amount="{{ quick_amounts.2 }}"
+                                        >Поддержать</a>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-card detail-empty-card">У этой мечети пока нет активных проектов.</div>
+                    {% endif %}
+                </section>
+
+                <section class="detail-card" id="legal">
+                    <div class="section-split detail-section-head">
+                        <div>
+                            <h2>Юридическая информация</h2>
+                            <p>Реквизиты, официальные данные организации и подтверждающие документы.</p>
+                        </div>
+                    </div>
+
+                    {% if legal_info or documents %}
+                        <div class="detail-legal-stack">
+                            {% if legal_info %}
+                                <div class="legal-list">
+                                    {% for label, value in legal_info %}
+                                        <div class="legal-row">
+                                            <strong>{{ label }}</strong>
+                                            <span>{{ value }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if documents %}
+                                <div class="legal-actions">
+                                    <a class="button secondary has-icon icon-arrow-right legal-download-button" href="{{ documents.0.file.url }}" target="_blank" rel="noopener">
+                                        Скачать отчет
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="empty-card detail-empty-card">Юридическая информация пока не добавлена.</div>
+                    {% endif %}
+                </section>
+
+                {% if gallery_images %}
+                    <section class="detail-card" data-lightbox-root>
+                        <div class="section-split detail-section-head">
+                            <div>
+                                <h2>Фотографии мечети</h2>
+                                <p>Публичная галерея для более полного представления о мечети и её пространстве.</p>
+                            </div>
+                        </div>
+                        <div class="gallery-grid">
+                            {% for image in gallery_images %}
+                                <figure class="gallery-card">
+                                    <button
+                                        type="button"
+                                        class="gallery-card-button"
+                                        data-gallery-trigger
+                                        data-gallery-src="{{ image.image.url }}"
+                                        data-gallery-alt="{{ image.caption|default:mosque.name }}"
+                                        data-gallery-caption="{{ image.caption|default:'' }}"
+                                        aria-label="Открыть фото мечети"
+                                    >
+                                        <img src="{{ image.image.url }}" alt="{{ image.caption|default:mosque.name }}">
+                                    </button>
+                                    {% if image.caption %}<figcaption>{{ image.caption }}</figcaption>{% endif %}
+                                </figure>
+                            {% endfor %}
+                        </div>
+                        <div class="gallery-lightbox" hidden data-gallery-lightbox>
+                            <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Закрыть просмотр">Закрыть</button>
+                            <div class="gallery-lightbox-dialog">
+                                <img src="" alt="" data-gallery-lightbox-image>
+                                <p class="gallery-lightbox-caption" data-gallery-lightbox-caption></p>
+                            </div>
+                        </div>
+                    </section>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="support-modal"
+            data-support-modal
+            {% if not open_support_modal %}hidden{% endif %}
+            data-open-on-load="{{ open_support_modal|yesno:'true,false' }}"
+        >
+            <div class="support-modal-backdrop" data-close-support-modal></div>
+            <div
+                class="support-modal-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="support-modal-title"
+                data-donation-shell
+                data-authenticated="{{ request.user.is_authenticated|yesno:'true,false' }}"
+            >
+                <button type="button" class="support-modal-close" data-close-support-modal aria-label="Закрыть окно оплаты">Закрыть</button>
+                <div class="support-card-head support-modal-head">
+                    <div>
+                        <h2 id="support-modal-title">Поддержать мечеть</h2>
+                        <p>Средняя сумма помощи — {{ average_donation|floatformat:0|intcomma }} ₽</p>
+                    </div>
+                </div>
+
+                <form method="post" class="mosque-support-form">
+                    {% csrf_token %}
+                    {{ support_form.mode }}
+                    {{ support_form.payment_method }}
+
+                    {% if support_form.non_field_errors %}
+                        <div class="message error">{{ support_form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="mode-switch large">
+                        <button type="button" class="mode-button{% if support_form.mode.value == 'once' or not support_form.mode.value %} active{% endif %}" data-mode="once">Единоразово</button>
+                        <button type="button" class="mode-button{% if support_form.mode.value == 'monthly' %} active{% endif %}" data-mode="monthly">Регулярно</button>
+                    </div>
+
+                    <div class="amount-grid compact">
+                        {% for amount in quick_amounts %}
+                            <button type="button" class="amount-chip{% if support_form.amount.value|stringformat:'s' == amount|stringformat:'s' %} active{% elif not support_form.amount.value and forloop.first %} active{% endif %}" data-amount="{{ amount }}">{{ amount|intcomma }} ₽</button>
+                        {% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label for="{{ support_form.amount.id_for_label }}">Внести свою сумму</label>
+                        {{ support_form.amount }}
+                        {% for error in support_form.amount.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                    </div>
+
+                    <div class="payment-grid">
+                        <button type="button" class="payment-button{% if support_form.payment_method.value == 'card' or not support_form.payment_method.value %} active{% endif %}" data-payment-method="card">Банковской картой</button>
+                        <button type="button" class="payment-button{% if support_form.payment_method.value == 'sbp' %} active{% endif %}" data-payment-method="sbp">Через СБП по QR-коду</button>
+                    </div>
+                    {% for error in support_form.payment_method.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+                    <div class="field">
+                        <label class="field-label-with-hint" for="{{ support_form.full_name.id_for_label }}">
+                            <span>Имя и фамилия</span>
+                            <span
+                                class="field-label-hint"
+                                tabindex="0"
+                                aria-label="Личные данные можно заполнить в профиле"
+                                title="Личные данные можно заполнить в профиле"
+                            >!</span>
+                        </label>
+                        {{ support_form.full_name }}
+                        {% for error in support_form.full_name.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label class="field-label-with-hint" for="{{ support_form.email.id_for_label }}">
+                            <span>Email</span>
+                            <span
+                                class="field-label-hint"
+                                tabindex="0"
+                                aria-label="Необязательное поле."
+                                title="Необязательное поле."
+                            >!</span>
+                        </label>
+                        {{ support_form.email }}
+                        {% for error in support_form.email.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                    </div>
+
+                    <label class="checkbox-row">
+                        {{ support_form.is_public_anonymous }}
+                        <span>Показывать меня как анонимного спонсора</span>
+                    </label>
+
+                    <label class="checkbox-row consent-row">
+                        {{ support_form.consent }}
+                        <span>Я даю согласие на обработку персональных данных и условия оплаты цифровой платформы</span>
+                    </label>
+                    {% for error in support_form.consent.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+                    <button class="button primary full-width support-submit" type="submit">Поддержать мечеть</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

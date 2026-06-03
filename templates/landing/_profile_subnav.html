@@ -1,0 +1,19 @@
+<div class="landing-section-panel profile-subnav-panel">
+    <div class="profile-subnav">
+        <a class="profile-subnav-link{% if profile_section == 'overview' %} is-active{% endif %}" href="{% url 'platform:profile' %}">
+            Обзор
+        </a>
+        <a class="profile-subnav-link{% if profile_section == 'history' %} is-active{% endif %}" href="{% url 'platform:profile-history' %}">
+            История помощи
+        </a>
+        <a class="profile-subnav-link{% if profile_section == 'subscriptions' %} is-active{% endif %}" href="{% url 'platform:profile-subscriptions' %}">
+            Подписки
+        </a>
+        <a class="profile-subnav-link{% if profile_section == 'notifications' %} is-active{% endif %}" href="/profile/notifications/">
+            Уведомления
+        </a>
+        <a class="profile-subnav-link{% if profile_section == 'settings' %} is-active{% endif %}" href="{% url 'platform:profile-settings' %}">
+            Настройки
+        </a>
+    </div>
+</div>

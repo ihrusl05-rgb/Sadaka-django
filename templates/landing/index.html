@@ -1,0 +1,200 @@
+{% extends "landing/base.html" %}
+{% load static humanize %}
+
+{% block title %}Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell">
+    <section class="hero home-hero" id="top">
+        <div class="hero-bg hero-bg-right"></div>
+        <div class="hero-bg hero-bg-left"></div>
+        {% include "landing/_site_header.html" %}
+
+        <div class="hero-grid home-hero-grid">
+            <div class="hero-copy hero-copy-panel home-hero-copy">
+                <div class="home-hero-copy-body">
+                    <h1 class="hero-title home-hero-title">
+                        <span>Совершай садака джария —</span>
+                        <span>награда, которая не прекращается</span>
+                    </h1>
+                    <p class="hero-hadith hero-description">{{ hero.hadith }}</p>
+                </div>
+                <div class="hero-actions hero-cta-group home-hero-actions">
+                    <a class="button hero-cta hero-cta-primary has-icon icon-mosque" href="{% url 'platform:mosques' %}">Все мечети</a>
+                    <a class="button hero-cta hero-cta-secondary has-icon icon-info" href="#how">Как работает садака джария</a>
+                </div>
+            </div>
+            <aside class="hero-side hero-image-panel home-hero-side">
+                <div class="hero-image-frame home-hero-image-frame">
+                    <img src="{% static 'landing/home-hero-mosque.png' %}" alt="Мечеть" loading="eager">
+                </div>
+            </aside>
+        </div>
+
+        <div class="mosque-search-card landing-search-card home-search-card" id="quick-donate">
+            <div class="mosque-search-backdrop"></div>
+            <div class="mosque-search-content">
+                <div class="mosque-search-copy">
+                    <h2>Найдите мечеть и станьте частью благого дела</h2>
+                    <p>Выберите город или найдите мечеть, чтобы поддержать строительство, развитие и проекты садака джария с прозрачной отчетностью.</p>
+                </div>
+
+                <form class="mosque-search-form" id="quick-donation-form" method="get" data-mosque-search-form>
+                    <div class="mosque-search-controls">
+                        <div class="mosque-search-control mosque-search-city">
+                            <label class="mosque-search-label" for="quick-city">Город</label>
+                            <select id="quick-city" data-city-select{% if not available_cities %} disabled{% endif %}>
+                                {% if available_cities %}
+                                    <option value="">Выберите город</option>
+                                    {% for city in available_cities %}
+                                        <option value="{{ city }}">{{ city }}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    <option value="">Пока нет доступных городов</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="mosque-search-control mosque-search-query">
+                            <label class="mosque-search-label" for="quick-search">Поиск по мечети</label>
+                            <input
+                                id="quick-search"
+                                type="search"
+                                placeholder="Поиск по названию, адресу мечети..."
+                                data-mosque-query
+                                {% if not searchable_mosques %}disabled{% endif %}
+                            >
+                        </div>
+                        <button class="button primary mosque-search-submit has-icon icon-arrow-right" type="submit" {% if not searchable_mosques %}disabled{% endif %}>
+                            Поиск
+                        </button>
+                    </div>
+                </form>
+
+                <div class="city-mosques-block" data-city-mosques-block hidden>
+                    <div class="city-mosques-head">
+                        <div>
+                            <h3>Подходящие мечети</h3>
+                        </div>
+                        <div class="city-mosques-badge" data-city-mosques-badge>Город не выбран</div>
+                    </div>
+                    <div class="city-mosques-grid" data-city-mosques-grid>
+                        <div class="city-mosques-hint">
+                            {% if searchable_mosques %}
+                                Выберите город, чтобы увидеть мечети.
+                            {% else %}
+                                Доступных мечетей пока нет. Загляните позже.
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section landing-section" id="how">
+        <div class="landing-section-panel">
+            <div class="section-head centered landing-section-head">
+                <h2>Как работает садака джария</h2>
+                <p>Поддерживайте мечети и благие проекты легко, безопасно и с полной прозрачностью на каждом этапе.</p>
+            </div>
+            <div class="steps-grid landing-steps-grid">
+                <article class="step-card">
+                    <img class="step-media" src="{% static 'landing/steps/step-1.png' %}" alt="Шаг 1" loading="lazy">
+                    <div class="step-number">01</div>
+                    <h3>Выберите мечеть</h3>
+                    <p>Найдите проверенную мечеть или благотворительный проект в своем городе.</p>
+                </article>
+                <article class="step-card">
+                    <img class="step-media" src="{% static 'landing/steps/step-2.png' %}" alt="Шаг 2" loading="lazy">
+                    <div class="step-number">02</div>
+                    <h3>Совершите садака</h3>
+                    <p>Оформите ежемесячную поддержку всего за несколько минут.</p>
+                </article>
+                <article class="step-card">
+                    <img class="step-media" src="{% static 'landing/steps/step-3.png' %}" alt="Шаг 3" loading="lazy">
+                    <div class="step-number">03</div>
+                    <h3>Следите за пользой</h3>
+                    <p>Получайте прозрачную отчетность и наблюдайте, как ваше пожертвование приносит благо людям.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section muted landing-section" id="top-users">
+        <div class="landing-section-panel">
+            <div class="section-head centered landing-section-head">
+                <h2>Сейчас совершают садака</h2>
+                <p>Прозрачные пожертвования, поддержка мечетей и живая активность сообщества в режиме реального времени.</p>
+            </div>
+            <div class="community-layout">
+                <div class="tabs landing-tabs-card support-ranking-card" data-tabs>
+                    <div class="support-ranking-head">
+                        <div>
+                            <h3>Лидеры благого дела</h3>
+                        </div>
+                        <div class="tab-controls">
+                            <button class="tab-button active" type="button" data-tab-target="amount">По сумме</button>
+                            <button class="tab-button" type="button" data-tab-target="count">По количеству</button>
+                        </div>
+                    </div>
+                    <div class="tab-panel active" data-tab-panel="amount">
+                        {% for donor in top_users.by_amount|slice:":3" %}
+                            <div class="leader-row support-leader-row">
+                                <div class="leader-rank">#{{ donor.rank }}</div>
+                                <div class="leader-main">
+                                    <strong>{{ donor.name }}</strong>
+                                    <span>{{ donor.count }} пожертв.</span>
+                                </div>
+                                <div class="leader-value">{{ donor.amount|floatformat:0|intcomma }} ₽</div>
+                            </div>
+                        {% empty %}
+                            <div class="empty-card">Рейтинг появится после первых успешных пожертвований.</div>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-panel" data-tab-panel="count">
+                        {% for donor in top_users.by_count|slice:":3" %}
+                            <div class="leader-row support-leader-row">
+                                <div class="leader-rank">#{{ donor.rank }}</div>
+                                <div class="leader-main">
+                                    <strong>{{ donor.name }}</strong>
+                                    <span>{{ donor.amount|floatformat:0|intcomma }} ₽</span>
+                                </div>
+                                <div class="leader-value">{{ donor.count }} пожертв.</div>
+                            </div>
+                        {% empty %}
+                            <div class="empty-card">Рейтинг появится после первых успешных пожертвований.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <aside class="realtime-card">
+                    <div class="realtime-card-head">
+                        <div class="realtime-status">
+                            <span class="realtime-status-dot" aria-hidden="true"></span>
+                            <span>Сегодня</span>
+                        </div>
+                        <div class="realtime-label">В реальном времени</div>
+                    </div>
+                    <div class="realtime-total">{{ stats.donated_today|floatformat:0|intcomma }} ₽</div>
+                    <div class="realtime-subtitle">Пожертвовали сегодня через платформу</div>
+                    <div class="realtime-feed-title">Последние садака</div>
+                    <div class="realtime-feed">
+                        {% for donation in live_feed %}
+                            <div class="realtime-feed-row">
+                                <div class="realtime-avatar">{{ donation.donor_name|first|upper }}</div>
+                                <div class="realtime-feed-main">
+                                    <strong>{{ donation.donor_name }}</strong>
+                                    <span>{{ donation.mosque_name }}</span>
+                                </div>
+                                <div class="realtime-feed-amount">{{ donation.amount|floatformat:0|intcomma }} ₽</div>
+                            </div>
+                        {% empty %}
+                            <div class="empty-card">После первых пожертвований здесь появится живая лента благих дел.</div>
+                        {% endfor %}
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>
+{{ searchable_mosques|json_script:"searchable-mosques-data" }}
+{% endblock %}

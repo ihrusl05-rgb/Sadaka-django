@@ -1,0 +1,102 @@
+{% extends "landing/base.html" %}
+{% load static humanize %}
+
+{% block title %}Помощь и ответы · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell">
+    {% include "landing/_page_shell.html" with section_id="top" %}
+
+    <section class="section landing-section help-page-section">
+        <div class="landing-section-panel faq-panel" data-faq-root>
+            <div class="section-head landing-section-head faq-section-head">
+                <h1>Помощь и ответы</h1>
+                <p>Мы собрали ответы на самые важные вопросы о садака джария, пожертвованиях и работе платформы, чтобы помощь мечетям была простой, прозрачной и понятной.</p>
+                <h2>Частые вопросы</h2>
+            </div>
+            <div class="faq-category-list" role="tablist" aria-label="Категории вопросов">
+                {% for category in faq_categories %}
+                    <button
+                        class="faq-category-button{% if category.slug == 'all' %} is-active{% endif %}"
+                        type="button"
+                        data-faq-filter="{{ category.slug }}"
+                    >
+                        {{ category.label }}
+                    </button>
+                {% endfor %}
+            </div>
+            <div class="faq-list">
+                {% for item in faq_items %}
+                    <article class="faq-item" data-faq-item data-faq-categories="{{ item.categories_value }}">
+                        <button class="faq-question" type="button" data-faq-toggle aria-expanded="false">
+                            <span>{{ item.question }}</span>
+                            <span class="faq-question-icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="faq-answer" hidden data-faq-panel>
+                            <div class="faq-answer-inner">{{ item.answer }}</div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section landing-section" id="add-mosque">
+        <div class="landing-section-panel add-mosque-panel">
+            <div class="add-mosque-copy">
+                <h2 class="add-mosque-title stacked-title"><span>Не нашли свою мечеть?</span><span>Добавляйте мечеть!</span></h2>
+                <p>Оставьте контактные данные и базовую информацию. Мы проверим заявку, свяжемся с вами и поможем вывести мечеть на публичную страницу платформы.</p>
+            </div>
+            <div class="add-mosque-form-card">
+                {% if messages %}
+                    <div class="message-stack">
+                        {% for message in messages %}
+                            <div class="message success">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <form method="post" class="add-mosque-form">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="message error">{{ form.non_field_errors }}</div>
+                    {% endif %}
+                    <div class="field-row">
+                        <label class="field-label" for="{{ form.full_name.id_for_label }}">ФИО</label>
+                        {{ form.full_name }}
+                        {% for error in form.full_name.errors %}
+                            <div class="field-error" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="field-row">
+                        <label class="field-label" for="{{ form.mosque_name.id_for_label }}">Название мечети</label>
+                        {{ form.mosque_name }}
+                        {% for error in form.mosque_name.errors %}
+                            <div class="field-error" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="field-row">
+                        <label class="field-label" for="{{ form.region.id_for_label }}">Регион</label>
+                        {{ form.region }}
+                        <datalist id="mosque-region-options">
+                            {% for city in available_cities %}
+                                <option value="{{ city }}"></option>
+                            {% endfor %}
+                        </datalist>
+                        {% for error in form.region.errors %}
+                            <div class="field-error" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="field-row">
+                        <label class="field-label" for="{{ form.phone.id_for_label }}">Номер телефона</label>
+                        {{ form.phone }}
+                        {% for error in form.phone.errors %}
+                            <div class="field-error" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <button class="button primary full-width" type="submit">Добавить мечеть</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

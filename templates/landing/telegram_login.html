@@ -1,0 +1,213 @@
+{% extends "landing/base.html" %}
+{% load static %}
+
+{% block title %}Вход · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell auth-landing-shell">
+    <section class="section auth-hero-section">
+        <div class="auth-scene">
+            <div class="auth-brand" aria-label="Садака Джария" role="img">
+                <img class="auth-brand-mark" src="{% static 'branding/sj-brand-mark.png' %}?v=20260516-41" alt="" aria-hidden="true" draggable="false" data-protected-media>
+                <span class="auth-brand-name">Садака Джария</span>
+            </div>
+
+            <div class="auth-grid">
+                <div
+                    class="checkout-card auth-single-card auth-shell-card"
+                    data-auth-shell
+                    data-auth-step="{{ active_step }}"
+                    data-status-url="{{ provider_status_url }}"
+                    data-auth-url="{{ provider_url }}"
+                    data-provider-name="{{ auth_provider }}"
+                    data-provider-status-text="{{ provider_pending_status }}"
+                    data-provider-confirmed-with-name="{{ provider_confirmed_with_name }}"
+                    data-provider-confirmed-without-name="{{ provider_confirmed_without_name }}"
+                    data-auto-open-auth="{{ auto_open_telegram|yesno:'true,false' }}"
+                >
+                    {% if auth_error %}
+                        <div class="message error auth-message" role="alert">{{ auth_error }}</div>
+                    {% endif %}
+
+                    <div class="auth-card-head auth-hero-head auth-card-head-centered">
+                        <h1>Вход через Telegram и MAX</h1>
+                        <p>Откройте бота, получите одноразовый код и подтвердите вход на сайте.</p>
+                    </div>
+
+                    <div class="auth-stage{% if active_step != 'start' %} is-hidden{% endif %}" data-auth-panel="start">
+                        <div class="auth-actions-intro">
+                            {% if telegram_available %}
+                                <form method="post" class="auth-form" novalidate data-start-auth-form>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="start_telegram">
+                                    <input type="hidden" name="next" value="{{ next_url }}">
+
+                                    <button class="button primary full-width auth-submit-button has-icon icon-telegram" type="submit" data-submit-label="Войти через Telegram">
+                                        <span>Войти через Telegram</span>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            {% if max_available %}
+                                <form method="post" class="auth-form" novalidate data-start-auth-form>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="start_max">
+                                    <input type="hidden" name="next" value="{{ next_url }}">
+
+                                    <button class="button secondary full-width auth-submit-button{% if provider_icon_class %} {{ provider_icon_class }}{% endif %}" type="submit" data-submit-label="Войти через MAX">
+                                        <span>Войти через MAX</span>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            <div class="auth-stage-note">Нажмите кнопку, и мы откроем выбранного бота для получения кода.</div>
+                        </div>
+
+                        <div class="auth-divider"><span>или</span></div>
+
+                        <form method="post" class="auth-form auth-password-form" novalidate>
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="email_login">
+                            <input type="hidden" name="next" value="{{ next_url }}">
+
+                            {% if email_login_form.non_field_errors %}
+                                <div class="message error auth-message" role="alert">{{ email_login_form.non_field_errors }}</div>
+                            {% endif %}
+
+                            <div class="field">
+                                <label for="{{ email_login_form.email.id_for_label }}">Email</label>
+                                {{ email_login_form.email }}
+                                {% for error in email_login_form.email.errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="field">
+                                <label for="{{ email_login_form.password.id_for_label }}">Пароль</label>
+                                {{ email_login_form.password }}
+                                {% for error in email_login_form.password.errors %}<div class="field-error" role="alert">{{ error }}</div>{% endfor %}
+                            </div>
+
+                            <button class="button secondary full-width auth-submit-button" type="submit">Войти по email и паролю</button>
+                        </form>
+                    </div>
+
+                    <div class="auth-stage{% if active_step != 'await_provider' %} is-hidden{% endif %}" data-auth-panel="await_provider">
+                        <div class="auth-card-head auth-card-head-centered">
+                            <h2>{{ provider_pending_title }}</h2>
+                            <p>{{ provider_pending_text }}</p>
+                        </div>
+
+                        <a
+                            class="button primary full-width auth-submit-button{% if provider_icon_class %} {{ provider_icon_class }}{% endif %}"
+                            href="{{ provider_url }}"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            {{ provider_open_label }}
+                        </a>
+
+                        <div class="auth-status-card">
+                            <strong data-auth-status-text>{{ provider_pending_status }}</strong>
+                            <span>Если бот не открылся автоматически, используйте кнопку выше и вернитесь в это окно.</span>
+                        </div>
+
+                        <div class="auth-actions-stack">
+                            <button class="button ghost full-width auth-provider-button" type="submit" form="auth-reset-form">Начать заново</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-stage{% if active_step != 'enter_code' %} is-hidden{% endif %}" data-auth-panel="enter_code">
+                        <div class="auth-card-head auth-card-head-centered">
+                            <h2>{{ provider_code_title }}</h2>
+                            <p data-auth-confirmed-copy>
+                                {% if provider_display_name %}
+                                    Аккаунт {{ provider_display_name }} подтверждён. Код уже в чате с ботом.
+                                {% else %}
+                                    {{ provider_confirmed_without_name }}
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="auth-debug{% if not debug_otp_code %} is-hidden{% endif %}" data-auth-debug>
+                            Тестовый код для разработки: <strong data-auth-debug-value>{{ debug_otp_code }}</strong>
+                        </div>
+
+                        <form method="post" class="auth-form" novalidate data-otp-form>
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="verify_code">
+                            <input type="hidden" name="next" value="{{ next_url }}">
+                            {{ verify_form.code }}
+
+                            <div class="field{% if verify_form.code.errors %} field-invalid{% endif %}">
+                                <label for="otp-slot-0">6-значный код</label>
+                                <div class="otp-inputs" role="group" aria-label="Введите 6-значный код">
+                                    <input class="otp-slot" id="otp-slot-0" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" data-otp-slot aria-label="Цифра 1">
+                                    <input class="otp-slot" type="text" inputmode="numeric" maxlength="1" data-otp-slot aria-label="Цифра 2">
+                                    <input class="otp-slot" type="text" inputmode="numeric" maxlength="1" data-otp-slot aria-label="Цифра 3">
+                                    <input class="otp-slot" type="text" inputmode="numeric" maxlength="1" data-otp-slot aria-label="Цифра 4">
+                                    <input class="otp-slot" type="text" inputmode="numeric" maxlength="1" data-otp-slot aria-label="Цифра 5">
+                                    <input class="otp-slot" type="text" inputmode="numeric" maxlength="1" data-otp-slot aria-label="Цифра 6">
+                                </div>
+                                <div class="field-help" aria-live="polite">Код действует 5 минут и используется один раз.</div>
+                                {% for error in verify_form.code.errors %}
+                                    <div class="field-error" role="alert" aria-live="assertive">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="auth-actions-stack">
+                                <button class="button primary full-width auth-submit-button" type="submit" disabled data-submit-label="Подтвердить вход" data-otp-submit>
+                                    <span>Подтвердить вход</span>
+                                </button>
+                                <button class="button secondary full-width auth-provider-button" type="submit" form="auth-request-code-form">Отправить код повторно</button>
+                                <button class="button ghost full-width auth-provider-button" type="submit" form="auth-reset-form">Вернуться к началу</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <a class="auth-inline-link auth-secondary-link" href="{% url 'platform:landing' %}">Вернуться на главную</a>
+
+                    <form id="auth-request-code-form" method="post" class="auth-resend-form" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="request_code">
+                        <input type="hidden" name="next" value="{{ next_url }}">
+                    </form>
+
+                    <form id="auth-reset-form" method="post" class="auth-resend-form" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="reset_login">
+                    </form>
+                </div>
+
+                <aside class="auth-guide-card">
+                    <div class="auth-guide-head">
+                        <h2>Три простых шага</h2>
+                        <p>Вы не теряете страницу: бот открывается отдельно, а сайт остаётся в режиме ожидания кода.</p>
+                    </div>
+                    <div class="auth-guide-steps">
+                        <div class="auth-guide-step">
+                            <span>1</span>
+                            <div>
+                                <strong>Откройте Telegram или MAX</strong>
+                                <p>Выберите удобный способ входа и откройте auth-бот Sadaka.</p>
+                            </div>
+                        </div>
+                        <div class="auth-guide-step">
+                            <span>2</span>
+                            <div>
+                                <strong>Подтвердите аккаунт</strong>
+                                <p>Бот подтвердит ваш аккаунт и отправит одноразовый код в чат.</p>
+                            </div>
+                        </div>
+                        <div class="auth-guide-step">
+                            <span>3</span>
+                            <div>
+                                <strong>Введите код на сайте</strong>
+                                <p>Код действует 5 минут и подходит только для одного входа.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="auth-guide-note">
+                        Безопасный вход через Telegram или MAX с привязкой аккаунта и автоматической выдачей сессии.
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

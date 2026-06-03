@@ -1,0 +1,227 @@
+{% extends "landing/base.html" %}
+{% load humanize %}
+
+{% block title %}Личный кабинет · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell profile-page-shell">
+    {% include "landing/_page_shell.html" with section_class="detail-header profile-header-shell" nav_class="profile-nav" %}
+
+    <section class="section landing-section profile-section">
+        {% include "landing/_profile_subnav.html" %}
+
+        {% if messages %}
+            <div class="message-stack">
+                {% for message in messages %}
+                    <div class="message success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="landing-section-panel profile-dashboard-hero">
+            <div class="profile-dashboard-hero-grid profile-dashboard-hero-grid--single">
+                <div class="profile-identity-card profile-identity-card--hero">
+                    <div class="profile-dashboard-avatar" aria-hidden="true">
+                        <span>{{ profile_identity.initials }}</span>
+                    </div>
+                    <div class="profile-identity-copy">
+                        <div class="profile-eyebrow">Личный кабинет</div>
+                        <h1>{{ profile_identity.display_name }}</h1>
+                        <p class="profile-identity-description">{{ profile_identity.primary_contact }}</p>
+                        <div class="profile-identity-meta">
+                            <div class="profile-meta-pill">
+                                <span>Telegram</span>
+                                <strong>{% if telegram_profile %}{{ telegram_profile.display_name }} · привязан{% else %}Не привязан{% endif %}</strong>
+                            </div>
+                            <div class="profile-meta-pill">
+                                <span>С нами с</span>
+                                <strong>{{ profile_identity.member_since|date:"d.m.Y" }}</strong>
+                            </div>
+                            <div class="profile-meta-pill">
+                                <span>Телефон</span>
+                                <strong>{{ profile_identity.phone|default:"Добавьте в настройках" }}</strong>
+                            </div>
+                        </div>
+                        <div class="profile-hero-actions">
+                            <a class="button primary profile-action-button" href="{% url 'platform:profile-settings' %}">Открыть настройки</a>
+                            <a class="button secondary profile-action-button" href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Поддержка</a>
+                            <form class="profile-logout-form" method="post" action="{% url 'platform:logout' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{% url 'platform:landing' %}">
+                                <button class="button ghost profile-action-button profile-action-button--danger" type="submit">Выйти</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-dashboard-stats">
+            <article class="profile-dashboard-stat profile-dashboard-stat--primary">
+                <span>Всего пожертвовано</span>
+                <strong>{{ profile_overview.total_donated|floatformat:0|intcomma }} ₽</strong>
+                <p>{% if profile_overview.successful_donations_count %}Подтверждённая сумма вашей помощи на платформе.{% else %}После первого пожертвования здесь появится общая сумма помощи.{% endif %}</p>
+            </article>
+            <article class="profile-dashboard-stat">
+                <span>Пожертвований</span>
+                <strong>{{ profile_overview.successful_donations_count }}</strong>
+                <p>{% if profile_overview.successful_donations_count %}Успешных переводов в мечети и проекты.{% else %}Пока нет завершённых переводов.{% endif %}</p>
+            </article>
+            <article class="profile-dashboard-stat">
+                <span>Ежемесячная помощь</span>
+                <strong>{{ profile_overview.active_subscriptions_count }}</strong>
+                <p>{% if profile_overview.monthly_commitment %}Сейчас регулярно поддерживаете на {{ profile_overview.monthly_commitment|floatformat:0|intcomma }} ₽ в месяц.{% else %}Регулярная поддержка пока не подключена.{% endif %}</p>
+            </article>
+            <article class="profile-dashboard-stat">
+                <span>Последняя помощь</span>
+                <strong>{% if profile_overview.latest_support_at %}{{ profile_overview.latest_support_at|date:"d.m.Y" }}{% else %}Пока нет{% endif %}</strong>
+                <p>Последний успешный вклад из вашего кабинета.</p>
+            </article>
+            <article class="profile-dashboard-stat">
+                <span>Приглашено людей</span>
+                <strong>{{ profile_overview.invited_count }}</strong>
+                <p>{% if profile_overview.invited_count %}Столько участников уже пришли по вашей личной ссылке.{% else %}Поделитесь ссылкой, чтобы начать личный рейтинг благих дел.{% endif %}</p>
+            </article>
+            <article class="profile-dashboard-stat">
+                <span>Помощь от приглашённых</span>
+                <strong>{{ profile_overview.referred_payments_total|floatformat:0|intcomma }} ₽</strong>
+                <p>{% if profile_overview.referred_payments_count %}{{ profile_overview.referred_payments_count }} успешных пожертвований уже пришли по вашим приглашениям.{% else %}Когда приглашённые участники поддержат проекты, сумма появится здесь.{% endif %}</p>
+            </article>
+        </div>
+
+        <div class="landing-section-panel profile-referral-feature">
+            <div class="profile-referral-feature-head">
+                <div>
+                    <div class="profile-eyebrow">Рейтинг по приглашениям</div>
+                    <h2>Приглашайте друзей и следите, как ваша ссылка приносит помощь</h2>
+                    <p>Личный рейтинг вынесен на главную страницу кабинета: место, приглашённые участники и их пожертвования теперь всегда под рукой.</p>
+                </div>
+            </div>
+
+            <div class="profile-referral-feature-grid profile-referral-feature-grid--stacked" data-copy-root>
+                <div class="profile-referral-summary profile-referral-summary--full">
+                    <div class="field">
+                        <label for="invite-link">Личная ссылка</label>
+                        <input id="invite-link" type="text" value="{{ invite_link }}" readonly data-copy-source>
+                    </div>
+                    <div class="profile-referral-actions">
+                        <button class="button primary profile-copy-button" type="button" data-copy-button>Скопировать ссылку</button>
+                    </div>
+                    <div class="field-help" data-copy-feedback aria-live="polite">Подходит для Telegram, WhatsApp и личных публикаций.</div>
+
+                    <div class="profile-referral-highlight">
+                        <div class="profile-referral-highlight-item">
+                            <span>Ваше место</span>
+                            <strong>{% if referral_overview.rank %}#{{ referral_overview.rank }}{% else %}Пока вне топа{% endif %}</strong>
+                        </div>
+                        <div class="profile-referral-highlight-item">
+                            <span>Пригласили</span>
+                            <strong>+ {{ referral_overview.invited_count }}</strong>
+                        </div>
+                        <div class="profile-referral-highlight-item">
+                            <span>Пожертвований</span>
+                            <strong>+ {{ referral_overview.referred_payments_total|floatformat:0|intcomma }} ₽</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-referral-board">
+                    <div class="profile-referral-board-head">
+                        <h3>Топ участников по приглашению</h3>
+                        <span>Участники с самым сильным реферальным вкладом в помощь проектам и мечетям.</span>
+                    </div>
+                    <div class="profile-referral-table-shell">
+                        <table class="profile-referral-table">
+                            <thead>
+                                <tr>
+                                    <th>Место</th>
+                                    <th>Участник</th>
+                                    <th>Дней в благом</th>
+                                    <th>Пригласил</th>
+                                    <th>Платежей</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in referral_leaderboard|slice:":5" %}
+                                    <tr{% if item.is_current_user %} class="is-current-user"{% endif %}>
+                                        <td>{{ item.rank }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.days_in_good }}</td>
+                                        <td>+ {{ item.invited_count }}</td>
+                                        <td>
+                                            + {{ item.referred_payments_total|floatformat:0|intcomma }} ₽
+                                            <span>{{ item.referred_payments_count }} платежей</span>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="empty-card">Как только по приглашениям появятся первые участники, рейтинг начнёт заполняться автоматически.</div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="landing-section-panel profile-dashboard-panel profile-dashboard-panel--wide profile-dashboard-panel--events">
+            <div class="profile-panel-head">
+                <div>
+                    <h2>Свежие события</h2>
+                    <p>Последние уведомления по аккаунту, пожертвованиям и модерации.</p>
+                </div>
+                <a class="button secondary" href="/profile/notifications/">Все уведомления</a>
+            </div>
+            <div class="profile-activity-list">
+                {% for item in profile_recent_notifications %}
+                    <button
+                        class="profile-activity-card{% if not item.is_read %} is-unread{% endif %}"
+                        type="button"
+                        data-profile-notification-open
+                        data-notification-id="{{ item.id }}"
+                        data-notification-title="{{ item.title }}"
+                        data-notification-message="{{ item.message }}"
+                        data-notification-date="{{ item.created_at|date:'d.m.Y H:i' }}"
+                        data-notification-datetime="{{ item.created_at|date:'c' }}"
+                        data-notification-type="{{ item.get_notification_type_display }}"
+                        data-notification-link="{{ item.link|default:'' }}"
+                        data-notification-is-read="{% if item.is_read %}true{% else %}false{% endif %}">
+                        <div class="profile-activity-head">
+                            <strong>{{ item.title }}</strong>
+                            <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"d.m.Y H:i" }}</time>
+                        </div>
+                        <p>{{ item.message }}</p>
+                    </button>
+                {% empty %}
+                    <div class="empty-card">Уведомления появятся здесь, когда на платформе произойдут важные события по вашему аккаунту.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <section class="profile-letter-modal" hidden data-profile-notification-modal aria-hidden="true">
+            <div class="profile-letter-modal__backdrop" data-profile-notification-close></div>
+            <div class="profile-letter-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="profile-notification-title">
+                <div class="profile-letter-modal__head">
+                    <div>
+                        <div class="profile-letter-modal__eyebrow" data-profile-notification-type>Уведомление</div>
+                        <h2 id="profile-notification-title" data-profile-notification-title>Уведомление</h2>
+                    </div>
+                    <button class="profile-letter-modal__close" type="button" data-profile-notification-close aria-label="Закрыть">×</button>
+                </div>
+                <div class="profile-letter-modal__meta">
+                    <time data-profile-notification-date datetime=""></time>
+                </div>
+                <div class="profile-letter-modal__body" data-profile-notification-message></div>
+                <div class="profile-letter-modal__actions">
+                    <button class="button ghost" type="button" data-profile-notification-mark-read>Отметить прочитанным</button>
+                    <button class="button ghost danger" type="button" data-profile-notification-delete>Удалить</button>
+                    <a class="button primary" href="#" hidden data-profile-notification-link>Открыть</a>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

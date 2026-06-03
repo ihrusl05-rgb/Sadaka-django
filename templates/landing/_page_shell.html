@@ -1,0 +1,13 @@
+<section class="compact-page-shell{% if section_class %} {{ section_class }}{% endif %}"{% if section_id %} id="{{ section_id }}"{% endif %}>
+    <div class="compact-page-shell-inner">
+        {% include "landing/_site_header.html" with nav_class=nav_class header_variant=header_variant %}
+        {% if hero_title %}
+            <div class="subpage-hero-card{% if hero_card_class %} {{ hero_card_class }}{% endif %}">
+                <h1>{{ hero_title }}</h1>
+                {% if hero_description %}
+                    <p>{{ hero_description }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>

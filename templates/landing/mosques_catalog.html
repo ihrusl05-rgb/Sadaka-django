@@ -1,0 +1,119 @@
+{% extends "landing/base.html" %}
+{% load humanize %}
+
+{% block title %}Мечети · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell">
+    {% include "landing/_page_shell.html" with section_id="top" %}
+
+    <section class="section landing-section mosques-catalog-section" data-mosque-catalog-search>
+        <div class="landing-section-panel mosques-search-panel">
+            <div class="catalog-search-head">
+                <div class="catalog-search-copy">
+                    <h1>Мечети на платформе</h1>
+                    <p>Выберите мечеть по названию, городу или адресу и станьте частью благого дела уже сегодня</p>
+                </div>
+                <div class="catalog-search-count" data-mosque-count>
+                    Найдено {{ searchable_mosques|length }} мечетей
+                </div>
+            </div>
+            <div class="mosque-search-controls catalog-search-controls">
+                <div class="mosque-search-control mosque-search-city">
+                    <label class="mosque-search-label" for="catalog-city">Город</label>
+                    <select id="catalog-city" data-catalog-city-filter{% if not available_cities %} disabled{% endif %}>
+                        <option value="">Все города</option>
+                        {% for city in available_cities %}
+                            <option value="{{ city }}">{{ city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mosque-search-control mosque-search-query">
+                    <label class="mosque-search-label" for="catalog-search">Поиск по названию</label>
+                    <input
+                        id="catalog-search"
+                        type="search"
+                        placeholder="Название, город или адрес"
+                        data-catalog-query
+                        {% if not searchable_mosques %}disabled{% endif %}
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="landing-section-panel mosques-list-panel">
+            <div class="catalog-list-head">
+                <h2>Мечети каталога</h2>
+                <p data-mosque-summary>Откройте публичную страницу мечети, посмотрите активные проекты, реквизиты и поддержите нужный сбор.</p>
+            </div>
+            <div class="mosque-grid landing-project-grid mosque-catalog-grid" data-mosque-catalog-grid>
+                {% for mosque in searchable_mosques %}
+                    <article
+                        class="mosque-card project-teaser-card catalog-mosque-card"
+                        data-mosque-card
+                        data-card-link="{{ mosque.detail_url }}"
+                        data-mosque-name="{{ mosque.name|default:'' }}"
+                        data-mosque-city="{{ mosque.city|default:'' }}"
+                        data-mosque-address="{{ mosque.address|default:'' }}"
+                        data-mosque-description="{{ mosque.description|default:'' }}"
+                        tabindex="0"
+                        role="link"
+                        aria-label="Открыть страницу мечети {{ mosque.name }}"
+                    >
+                        <div class="catalog-mosque-image-wrap">
+                            <img class="catalog-mosque-image" src="{{ mosque.cover_image_url }}" alt="{{ mosque.name }}" loading="lazy">
+                        </div>
+                        <div class="mosque-content catalog-mosque-content">
+                            <div class="catalog-mosque-topline">
+                                <span class="catalog-city-chip">{{ mosque.city|default:"Город не указан" }}</span>
+                            </div>
+                            <h3>{{ mosque.name }}</h3>
+                            <p class="mosque-address mosque-card-address">{{ mosque.address|default:"Адрес уточняется" }}</p>
+                            <p class="mosque-description">{{ mosque.description|default:"Публичная страница мечети с актуальными проектами, реквизитами и прозрачной историей поддержки."|truncatechars:155 }}</p>
+                            <div class="catalog-mosque-progress-head">
+                                <div>
+                                    <strong>{{ mosque.collected_total|floatformat:0|intcomma }} ₽</strong>
+                                    <span>собрано</span>
+                                </div>
+                                <div>
+                                    {% if mosque.goal_total %}
+                                        <strong>{{ mosque.remaining_total|floatformat:0|intcomma }} ₽</strong>
+                                        <span>осталось</span>
+                                    {% else %}
+                                        <strong>0 ₽</strong>
+                                        <span>цель уточняется</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <span style="width: {{ mosque.progress_percent }}%"></span>
+                            </div>
+                            <div class="catalog-mosque-progress-meta">
+                                {% if mosque.goal_total %}
+                                    {{ mosque.progress_percent }}% от цели
+                                {% else %}
+                                    Цель сбора появится после публикации проектов
+                                {% endif %}
+                            </div>
+                            <a class="button primary full-width has-icon icon-heart-hand" href="{{ mosque.detail_url }}">Помочь</a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-card">После появления первых публичных мечетей здесь откроется каталог.</div>
+                {% endfor %}
+            </div>
+            <div class="catalog-empty-shell" data-mosque-empty-shell hidden>
+                <div class="empty-card catalog-empty-state" data-mosque-empty>По вашему запросу мечети не найдены. Попробуйте изменить город или сократить запрос.</div>
+                <div class="catalog-empty-cta">
+                    <div class="catalog-empty-cta-copy">
+                        <h3 class="stacked-title"><span>Не нашли свою мечеть?</span><span>Добавляйте мечеть!</span></h3>
+                        <p>Если нужной мечети пока нет в каталоге, оставьте заявку, и мы поможем добавить её на платформу.</p>
+                    </div>
+                    <a class="button primary has-icon icon-plus" href="{% url 'platform:help' %}#add-mosque">Добавить мечеть</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{ searchable_mosques|json_script:"searchable-mosques-data" }}
+{% endblock %}

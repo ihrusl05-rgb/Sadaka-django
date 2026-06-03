@@ -1,0 +1,926 @@
+[
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$ledrD2WsQRSC5wk3lQroff$cx67EqMnoymLew5kZrjILEsTWB5hFk8UpSTPiXU88QE=",
+    "last_login": null,
+    "is_superuser": false,
+    "created_at": "2026-05-03T11:04:59.059Z",
+    "updated_at": "2026-05-03T14:56:52.389Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "imam@sadaka.local",
+    "full_name": "Mosque Admin",
+    "first_name": "Admin",
+    "last_name": "Mosque",
+    "middle_name": "",
+    "phone": "",
+    "photo": "",
+    "role": "mosque_admin",
+    "is_staff": true,
+    "is_active": true,
+    "is_email_verified": true,
+    "is_phone_verified": false,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": null,
+    "date_joined": "2026-05-03T11:04:59Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$bt0fLVJEwoDnDTfEzcPLIg$z0w916ynmThuajSPFblcNT+Grqqp5bOI2Xk/W2t8nJ8=",
+    "last_login": "2026-05-12T16:22:03.475Z",
+    "is_superuser": true,
+    "created_at": "2026-05-03T12:08:25.239Z",
+    "updated_at": "2026-05-03T12:08:25.239Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "test@gmail.com",
+    "full_name": "",
+    "first_name": "",
+    "last_name": "",
+    "middle_name": "",
+    "phone": "",
+    "photo": "",
+    "role": "platform_admin",
+    "is_staff": true,
+    "is_active": true,
+    "is_email_verified": false,
+    "is_phone_verified": false,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": null,
+    "date_joined": "2026-05-03T12:08:25.040Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Kd5N80WzLC80vMsz6AltEv$+mzHJNszzyDaVZR7aiauDTXY+m0i8BpDc8zhWDQEL6Q=",
+    "last_login": "2026-05-12T15:07:44.639Z",
+    "is_superuser": false,
+    "created_at": "2026-05-03T12:16:19.807Z",
+    "updated_at": "2026-05-03T12:21:11.224Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "imam@gmail.com",
+    "full_name": "testimam",
+    "first_name": "testimam",
+    "last_name": "",
+    "middle_name": "",
+    "phone": "",
+    "photo": "",
+    "role": "mosque_admin",
+    "is_staff": true,
+    "is_active": true,
+    "is_email_verified": false,
+    "is_phone_verified": false,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": null,
+    "date_joined": "2026-05-03T12:15:34Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$UjjGnCYzjLJu25PKk55BvN$xB/kCQjjZzPoLIdx3Qq+QW0r55CBA4zrAf8MuHIRO9A=",
+    "last_login": null,
+    "is_superuser": false,
+    "created_at": "2026-05-03T12:16:58.974Z",
+    "updated_at": "2026-05-03T12:21:21.497Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "user@gmail.com",
+    "full_name": "usertest",
+    "first_name": "usertest",
+    "last_name": "",
+    "middle_name": "",
+    "phone": "",
+    "photo": "",
+    "role": "user",
+    "is_staff": false,
+    "is_active": true,
+    "is_email_verified": false,
+    "is_phone_verified": false,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": null,
+    "date_joined": "2026-05-03T12:16:25Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$EIqOJrXkC21bXHtpamWbJb$o/i9VW4J1g7+gxslF0HgfEu3G2uZrvXg/DujXHds40c=",
+    "last_login": null,
+    "is_superuser": true,
+    "created_at": "2026-05-03T15:18:05.994Z",
+    "updated_at": "2026-05-03T15:18:05.994Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "admin@sadaka.local",
+    "full_name": "Platform Admin",
+    "first_name": "Admin",
+    "last_name": "Platform",
+    "middle_name": "",
+    "phone": "",
+    "photo": "",
+    "role": "platform_admin",
+    "is_staff": true,
+    "is_active": true,
+    "is_email_verified": true,
+    "is_phone_verified": false,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": null,
+    "date_joined": "2026-05-03T15:18:05.994Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "!qIyhwFj2VCWat72wyzRxis7daSDwZjVO38Y4xrd5",
+    "last_login": "2026-05-12T16:24:11.070Z",
+    "is_superuser": false,
+    "created_at": "2026-05-08T13:19:13.805Z",
+    "updated_at": "2026-05-12T16:24:11.051Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "email": "phone_79273238864@phone-auth.sadaka.local",
+    "full_name": "Пользователь 8864",
+    "first_name": "8864",
+    "last_name": "Пользователь",
+    "middle_name": "",
+    "phone": "+79273238864",
+    "photo": "",
+    "role": "user",
+    "is_staff": false,
+    "is_active": true,
+    "is_email_verified": false,
+    "is_phone_verified": true,
+    "is_blocked": false,
+    "blocked_at": null,
+    "last_activity_at": "2026-05-12T16:24:11.050Z",
+    "date_joined": "2026-05-08T13:19:13.805Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.phoneotpchallenge",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-08T13:14:39.332Z",
+    "updated_at": "2026-05-08T13:14:39.332Z",
+    "phone": "+79990001122",
+    "code_hash": "pbkdf2_sha256$870000$nqGRzl2OsaBswSqacMI1ho$xfd7JNTOrlVtTWs3cLcsXsTIS8gr6lEi2V0xTBHM2Hk=",
+    "expires_at": "2026-05-08T13:19:39.132Z",
+    "attempts": 0,
+    "max_attempts": 5,
+    "used_at": null,
+    "last_sent_at": "2026-05-08T13:14:39.132Z",
+    "requested_by_ip": "127.0.0.1"
+  }
+},
+{
+  "model": "users.phoneotpchallenge",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-08T13:19:05.797Z",
+    "updated_at": "2026-05-08T13:19:13.797Z",
+    "phone": "+79273238864",
+    "code_hash": "pbkdf2_sha256$870000$w0tOctjU7927L2wmYfjjnz$k469xbGNs9tn4StZ0Clocgt0GH23J70TKm41VxQ4YQk=",
+    "expires_at": "2026-05-08T13:24:05.602Z",
+    "attempts": 0,
+    "max_attempts": 5,
+    "used_at": "2026-05-08T13:19:13.797Z",
+    "last_sent_at": "2026-05-08T13:19:05.602Z",
+    "requested_by_ip": "127.0.0.1"
+  }
+},
+{
+  "model": "users.phoneotpchallenge",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-08T14:04:37.709Z",
+    "updated_at": "2026-05-08T14:04:37.709Z",
+    "phone": "+79273238864",
+    "code_hash": "pbkdf2_sha256$870000$1S6CPHOyItS587n6r42vqu$l4ClvexD/OBZc5wVXVV+E6VpmTNWrtusNst2y4LLG0E=",
+    "expires_at": "2026-05-08T14:09:37.517Z",
+    "attempts": 0,
+    "max_attempts": 5,
+    "used_at": null,
+    "last_sent_at": "2026-05-08T14:04:37.517Z",
+    "requested_by_ip": "127.0.0.1"
+  }
+},
+{
+  "model": "users.phoneotpchallenge",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-05-12T14:58:13.350Z",
+    "updated_at": "2026-05-12T14:58:21.321Z",
+    "phone": "+79273238864",
+    "code_hash": "pbkdf2_sha256$870000$n2aJmZ2qAsscYN57XVZ2hP$Vn+TVbcvTeDye/QW9wEnmqVpcwuxWpmOV71ZwsEUUJk=",
+    "expires_at": "2026-05-12T15:03:13.152Z",
+    "attempts": 0,
+    "max_attempts": 5,
+    "used_at": "2026-05-12T14:58:21.320Z",
+    "last_sent_at": "2026-05-12T14:58:13.152Z",
+    "requested_by_ip": "127.0.0.1"
+  }
+},
+{
+  "model": "users.phoneotpchallenge",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-05-12T16:24:05.190Z",
+    "updated_at": "2026-05-12T16:24:11.042Z",
+    "phone": "+79273238864",
+    "code_hash": "pbkdf2_sha256$870000$5f878cajbAY197KcJXqqVv$N0lijGuxrfc9U3X9PvghkoP/qQ3ohxqKGTXQBCntOdM=",
+    "expires_at": "2026-05-12T16:29:04.990Z",
+    "attempts": 0,
+    "max_attempts": 5,
+    "used_at": "2026-05-12T16:24:11.042Z",
+    "last_sent_at": "2026-05-12T16:24:04.990Z",
+    "requested_by_ip": "127.0.0.1"
+  }
+},
+{
+  "model": "platform_core.platformsettings",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-03T11:04:59.062Z",
+    "updated_at": "2026-05-03T11:04:59.062Z",
+    "site_name": "Sadaka",
+    "support_email": "support@sadaka.local",
+    "default_commission_percent": "5.00",
+    "donations_enabled": true
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-05T14:02:24.271Z",
+    "updated_at": "2026-05-05T14:02:24.271Z",
+    "actor": [
+      "imam@gmail.com"
+    ],
+    "action": "donation.created",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "1",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-05T14:02:24.335Z",
+    "updated_at": "2026-05-05T14:02:24.336Z",
+    "actor": [
+      "imam@gmail.com"
+    ],
+    "action": "donation.confirmed",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "1",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-07T16:42:45.582Z",
+    "updated_at": "2026-05-07T16:42:45.582Z",
+    "actor": [
+      "imam@gmail.com"
+    ],
+    "action": "donation.created",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "2",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-05-07T16:42:45.645Z",
+    "updated_at": "2026-05-07T16:42:45.645Z",
+    "actor": [
+      "imam@gmail.com"
+    ],
+    "action": "donation.confirmed",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "2",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-05-08T13:14:39.340Z",
+    "updated_at": "2026-05-08T13:14:39.340Z",
+    "actor": null,
+    "action": "user.phone_otp_requested",
+    "content_type": [
+      "users",
+      "phoneotpchallenge"
+    ],
+    "object_id": "1",
+    "model_label": "phoneotpchallenge",
+    "metadata": {
+      "phone": "+79990001122"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-05-08T13:19:05.806Z",
+    "updated_at": "2026-05-08T13:19:05.806Z",
+    "actor": null,
+    "action": "user.phone_otp_requested",
+    "content_type": [
+      "users",
+      "phoneotpchallenge"
+    ],
+    "object_id": "2",
+    "model_label": "phoneotpchallenge",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-05-08T13:19:13.808Z",
+    "updated_at": "2026-05-08T13:19:13.808Z",
+    "actor": null,
+    "action": "user.phone_registered",
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "7",
+    "model_label": "user",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-05-08T13:19:13.813Z",
+    "updated_at": "2026-05-08T13:19:13.813Z",
+    "actor": null,
+    "action": "user.phone_otp_verified",
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "7",
+    "model_label": "user",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-05-08T14:04:37.718Z",
+    "updated_at": "2026-05-08T14:04:37.718Z",
+    "actor": null,
+    "action": "user.phone_otp_requested",
+    "content_type": [
+      "users",
+      "phoneotpchallenge"
+    ],
+    "object_id": "3",
+    "model_label": "phoneotpchallenge",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-05-12T14:58:13.358Z",
+    "updated_at": "2026-05-12T14:58:13.358Z",
+    "actor": null,
+    "action": "user.phone_otp_requested",
+    "content_type": [
+      "users",
+      "phoneotpchallenge"
+    ],
+    "object_id": "4",
+    "model_label": "phoneotpchallenge",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-05-12T14:58:21.331Z",
+    "updated_at": "2026-05-12T14:58:21.331Z",
+    "actor": null,
+    "action": "user.phone_otp_verified",
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "7",
+    "model_label": "user",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-05-12T15:07:31.375Z",
+    "updated_at": "2026-05-12T15:07:31.375Z",
+    "actor": [
+      "phone_79273238864@phone-auth.sadaka.local"
+    ],
+    "action": "donation.created",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "3",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-05-12T15:07:31.394Z",
+    "updated_at": "2026-05-12T15:07:31.394Z",
+    "actor": [
+      "phone_79273238864@phone-auth.sadaka.local"
+    ],
+    "action": "donation.confirmed",
+    "content_type": [
+      "donations",
+      "donation"
+    ],
+    "object_id": "3",
+    "model_label": "donation",
+    "metadata": {},
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-05-12T16:24:05.198Z",
+    "updated_at": "2026-05-12T16:24:05.198Z",
+    "actor": null,
+    "action": "user.phone_otp_requested",
+    "content_type": [
+      "users",
+      "phoneotpchallenge"
+    ],
+    "object_id": "5",
+    "model_label": "phoneotpchallenge",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "platform_core.auditlog",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-05-12T16:24:11.053Z",
+    "updated_at": "2026-05-12T16:24:11.053Z",
+    "actor": null,
+    "action": "user.phone_otp_verified",
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "7",
+    "model_label": "user",
+    "metadata": {
+      "phone": "+79273238864"
+    },
+    "ip_address": null
+  }
+},
+{
+  "model": "mosques.mosque",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-03T11:04:59.064Z",
+    "updated_at": "2026-05-12T14:34:14.714Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "name": "Тест-мечеть",
+    "slug": "test-mechet",
+    "description": "Тест тестович",
+    "public_story": "Мечеть была открыта в 2023 году. Комплекс включает мужской и женский молельные залы, комнату для омовений (вуду) и библиотеку. Главный купол украшен сурой «Аль-Фалак» каллиграфической вязью. Внутри — 24 люстры из хрусталя и ручное ковровое покрытие. Минарет выполнен в османском стиле с тремя балконами-шерефе. Прилегающая территория (0,7 га) выложена гранитной плиткой и разбита на клумбы с можжевельником.",
+    "city": "Казань",
+    "address": "1 Tatarstan Street",
+    "contact_email": "central@sadaka.local",
+    "contact_phone": "+79990000000",
+    "cover_image": "mosques/covers/none-434168370.webp",
+    "legal_name": "Религиозная организация «Мечеть «Нур-Иртыш» г. Омска",
+    "inn": "5501 234 567",
+    "kpp": "5501 010 01",
+    "ogrn": "1225500001234",
+    "bank_account": "4070 2810 5000 0123 4567",
+    "bank_name": "ОТДЕЛЕНИЕ ТЕСТОВОГО БАНКА г. Москва (ТЕСТ)",
+    "bik": "044 525 900",
+    "corr_account": "",
+    "legal_address": "",
+    "actual_address": "",
+    "okpo": "",
+    "oktmo": "",
+    "okato": "",
+    "verification_status": "verified",
+    "moderation_status": "approved",
+    "is_blocked": false,
+    "blocked_at": null,
+    "blocked_reason": "",
+    "commission_override": null,
+    "published_at": null,
+    "created_by": [
+      "imam@sadaka.local"
+    ]
+  }
+},
+{
+  "model": "mosques.mosque",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.211Z",
+    "updated_at": "2026-05-12T14:24:16.211Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "name": "Central Mosque",
+    "slug": "central-mosque",
+    "description": "Main seeded mosque profile.",
+    "public_story": "Публичная страница мечети с описанием текущего сбора и жизни общины.",
+    "city": "Kazan",
+    "address": "1 Tatarstan Street",
+    "contact_email": "central@sadaka.local",
+    "contact_phone": "+79990000000",
+    "cover_image": "",
+    "legal_name": "МЕСТНАЯ МУСУЛЬМАНСКАЯ РЕЛИГИОЗНАЯ ОРГАНИЗАЦИЯ",
+    "inn": "1650000000",
+    "kpp": "165001001",
+    "ogrn": "1021600000000",
+    "bank_account": "40703810000000000001",
+    "bank_name": "ПАО СБЕРБАНК",
+    "bik": "049205603",
+    "corr_account": "30101810400000000603",
+    "legal_address": "г. Казань, ул. Тестовая, д. 1",
+    "actual_address": "г. Казань, ул. Тестовая, д. 1",
+    "okpo": "12345678",
+    "oktmo": "92701000",
+    "okato": "92401385000",
+    "verification_status": "verified",
+    "moderation_status": "approved",
+    "is_blocked": false,
+    "blocked_at": null,
+    "blocked_reason": "",
+    "commission_override": null,
+    "published_at": null,
+    "created_by": [
+      "imam@sadaka.local"
+    ]
+  }
+},
+{
+  "model": "mosques.mosquemembership",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-03T11:04:59.067Z",
+    "updated_at": "2026-05-03T11:04:59.067Z",
+    "mosque": 1,
+    "user": [
+      "imam@sadaka.local"
+    ],
+    "is_primary": true
+  }
+},
+{
+  "model": "mosques.mosquemembership",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-03T17:08:19.792Z",
+    "updated_at": "2026-05-03T17:08:19.792Z",
+    "mosque": 1,
+    "user": [
+      "imam@gmail.com"
+    ],
+    "is_primary": true
+  }
+},
+{
+  "model": "mosques.mosquemembership",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.220Z",
+    "updated_at": "2026-05-12T14:24:16.220Z",
+    "mosque": 2,
+    "user": [
+      "imam@sadaka.local"
+    ],
+    "is_primary": true
+  }
+},
+{
+  "model": "mosques.mosquegalleryimage",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.244Z",
+    "updated_at": "2026-05-12T14:24:16.244Z",
+    "mosque": 2,
+    "image": "mosques/gallery/gallery.jpg",
+    "caption": "Основной зал мечети",
+    "sort_order": 10
+  }
+},
+{
+  "model": "mosques.mosqueexpenseitem",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.227Z",
+    "updated_at": "2026-05-12T14:24:16.227Z",
+    "mosque": 2,
+    "title": "Ремонт кровли",
+    "amount": "350000.00",
+    "sort_order": 10
+  }
+},
+{
+  "model": "mosques.mosqueexpenseitem",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.229Z",
+    "updated_at": "2026-05-12T14:24:16.229Z",
+    "mosque": 2,
+    "title": "Отделочные работы",
+    "amount": "220000.00",
+    "sort_order": 20
+  }
+},
+{
+  "model": "mosques.mosquedocument",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.232Z",
+    "updated_at": "2026-05-12T14:24:16.232Z",
+    "mosque": 2,
+    "title": "Агентский договор",
+    "file": "mosques/documents/agent-contract.txt",
+    "sort_order": 10
+  }
+},
+{
+  "model": "mosques.mosquepartner",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.234Z",
+    "updated_at": "2026-05-12T14:24:16.234Z",
+    "mosque": 2,
+    "name": "Sadaka",
+    "website_url": "https://sadaka.local",
+    "logo": "",
+    "sort_order": 10
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-03T11:04:59.070Z",
+    "updated_at": "2026-05-12T15:07:31.391Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "mosque": 1,
+    "created_by": [
+      "imam@sadaka.local"
+    ],
+    "title": "На тест",
+    "slug": "na-test",
+    "description": "Разработать ПСД до 15.10.2025.\r\n\r\nВыполнить нулевой цикл (фундамент) до 01.03.2026.\r\n\r\nСмонтировать купол (диаметр 12 м) до 01.07.2026.\r\n\r\nСдать объект под чистовую отделку до 01.12.2026.",
+    "status": "active",
+    "goal_amount": "1000000.00",
+    "current_amount": "10450.00",
+    "start_date": "2026-05-12",
+    "end_date": "2026-05-31",
+    "published_at": null,
+    "is_blocked": false
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-12T14:24:16.223Z",
+    "updated_at": "2026-05-12T14:24:16.223Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "mosque": 2,
+    "created_by": [
+      "imam@sadaka.local"
+    ],
+    "title": "Roof Restoration",
+    "slug": "roof-restoration",
+    "description": "Repair and waterproofing of the mosque roof.",
+    "status": "active",
+    "goal_amount": "1000000.00",
+    "current_amount": "0.00",
+    "start_date": null,
+    "end_date": null,
+    "published_at": null,
+    "is_blocked": false
+  }
+},
+{
+  "model": "donations.donation",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-05T14:02:24.263Z",
+    "updated_at": "2026-05-05T14:02:24.275Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "user": null,
+    "mosque": 1,
+    "project": 1,
+    "subscription": null,
+    "amount": "500.00",
+    "currency": "RUB",
+    "platform_fee_amount": "25.00",
+    "net_amount": "475.00",
+    "status": "succeeded",
+    "payment_method": "sbp",
+    "provider": "mock",
+    "provider_payment_id": "mock_b0964954136c4d73b0186a9ea0c7f054",
+    "receipt_number": "RCP-00000001",
+    "paid_at": "2026-05-05T14:02:24.274Z",
+    "guest_full_name": "Руслан",
+    "guest_email": "ihrusl05@gmai.com",
+    "is_public_anonymous": true,
+    "metadata": {
+      "public_checkout": true,
+      "public_mosque_page": true,
+      "mode": "once"
+    },
+    "external_reference": "749e667d-89b1-4099-a632-fe7af106c4cb"
+  }
+},
+{
+  "model": "donations.donation",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-07T16:42:45.574Z",
+    "updated_at": "2026-05-07T16:42:45.584Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "user": null,
+    "mosque": 1,
+    "project": 1,
+    "subscription": null,
+    "amount": "500.00",
+    "currency": "RUB",
+    "platform_fee_amount": "25.00",
+    "net_amount": "475.00",
+    "status": "succeeded",
+    "payment_method": "card",
+    "provider": "mock",
+    "provider_payment_id": "mock_84cc68b8c5eb4d94b010d1b0df9ca00f",
+    "receipt_number": "RCP-00000002",
+    "paid_at": "2026-05-07T16:42:45.584Z",
+    "guest_full_name": "",
+    "guest_email": "",
+    "is_public_anonymous": true,
+    "metadata": {
+      "public_checkout": true,
+      "public_mosque_page": true,
+      "mode": "once"
+    },
+    "external_reference": "417ffa67-6531-4d65-aac0-7198c2d445f2"
+  }
+},
+{
+  "model": "donations.donation",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-12T15:07:31.364Z",
+    "updated_at": "2026-05-12T15:07:31.380Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "user": null,
+    "mosque": 1,
+    "project": 1,
+    "subscription": null,
+    "amount": "10000.00",
+    "currency": "RUB",
+    "platform_fee_amount": "500.00",
+    "net_amount": "9500.00",
+    "status": "succeeded",
+    "payment_method": "card",
+    "provider": "mock",
+    "provider_payment_id": "mock_836180966a37414f82b00abe67bc2531",
+    "receipt_number": "RCP-00000003",
+    "paid_at": "2026-05-12T15:07:31.380Z",
+    "guest_full_name": "",
+    "guest_email": "",
+    "is_public_anonymous": true,
+    "metadata": {
+      "public_checkout": true,
+      "public_mosque_page": true,
+      "mode": "once"
+    },
+    "external_reference": "861f80a9-e2f5-4a4f-a3ba-603238aaab4f"
+  }
+},
+{
+  "model": "content.contentitem",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-03T11:04:59.075Z",
+    "updated_at": "2026-05-03T11:04:59.075Z",
+    "is_deleted": false,
+    "deleted_at": null,
+    "mosque": null,
+    "author": null,
+    "title": "Platform Launch",
+    "slug": "platform-launch",
+    "body": "Sadaka platform is ready for demo usage.",
+    "type": "news",
+    "scope": "platform",
+    "moderation_status": "approved",
+    "is_published": true,
+    "published_at": null,
+    "is_blocked": false
+  }
+}
+]

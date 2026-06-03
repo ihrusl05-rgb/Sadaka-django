@@ -1,0 +1,97 @@
+{% load static %}
+<nav class="nav site-nav{% if nav_class %} {{ nav_class }}{% endif %}">
+    <div class="nav-shell">
+        <a href="{% url 'platform:landing' %}" class="brand brand-full" aria-label="{{ site_meta.brand_name }}">
+            <img class="brand-mark" src="{% static 'branding/sj-brand-mark.png' %}?v=20260516-41" alt="" aria-hidden="true" draggable="false" data-protected-media>
+            <span class="brand-text">{{ site_meta.brand_name }}</span>
+        </a>
+        <div class="nav-actions" id="landing-nav-menu" data-mobile-menu>
+            <div class="mobile-menu-head" aria-hidden="true">
+                <div class="mobile-menu-title">{{ site_meta.brand_name }}</div>
+                <button class="mobile-menu-close" type="button" data-mobile-close aria-label="Закрыть меню">×</button>
+            </div>
+            <div class="nav-button-cluster">
+                {% if header_variant != "detail" %}
+                    <div class="nav-links">
+                        <a class="button secondary nav-link-button nav-text-link has-icon icon-search{% if current_page == 'landing' %} is-active{% endif %}" href="{% if current_page == 'landing' %}#quick-donate{% else %}{% url 'platform:landing' %}#quick-donate{% endif %}" aria-label="Поиск">
+                            <span class="nav-button-label">Поиск</span>
+                        </a>
+                        <a class="button secondary nav-link-button nav-text-link has-icon icon-mosque{% if current_page == 'mosques' %} is-active{% endif %}" href="{% url 'platform:mosques' %}" aria-label="Мечети">
+                            <span class="nav-button-label">Мечети</span>
+                        </a>
+                        <a class="button secondary nav-link-button nav-text-link has-icon icon-prayer{% if current_page == 'namaz' %} is-active{% endif %}" href="{% url 'platform:namaz' %}" aria-label="Намаз">
+                            <span class="nav-button-label">Намаз</span>
+                        </a>
+                        <a class="button secondary nav-link-button nav-text-link has-icon icon-heart-hand{% if current_page == 'help' %} is-active{% endif %}" href="{% url 'platform:help' %}" aria-label="Помощь">
+                            <span class="nav-button-label">Помощь</span>
+                        </a>
+                        <a class="button secondary nav-link-button nav-text-link has-icon icon-info{% if current_page == 'about' %} is-active{% endif %}" href="{% url 'platform:about' %}" aria-label="О нас">
+                            <span class="nav-button-label">О нас</span>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="nav-meta">
+                    {% if request.user.is_authenticated %}
+                        <div class="notification-bell" data-notifications-root data-list-url="/api/notifications/" data-unread-url="/api/notifications/unread-count/" data-read-all-url="/api/notifications/read-all/" data-page-url="/profile/notifications/" data-test-url="/api/notifications/test/">
+                            <button class="button secondary nav-auth-button notification-bell-button" type="button" data-notifications-toggle aria-expanded="false" aria-haspopup="dialog" aria-label="Уведомления" title="Уведомления">
+                                <span class="notification-bell-icon" aria-hidden="true"></span>
+                                <span class="nav-button-label">Уведомления</span>
+                                <span class="notification-badge" hidden data-notifications-badge>0</span>
+                            </button>
+                            <div class="notification-dropdown" hidden data-notifications-dropdown>
+                                <div class="notification-dropdown-head">
+                                    <div>
+                                        <strong>Уведомления</strong>
+                                        <span data-notifications-subtitle>Свежие события по аккаунту</span>
+                                    </div>
+                                    <label class="notification-sound-toggle">
+                                        <input type="checkbox" data-notifications-sound-toggle checked>
+                                        <span>Звук</span>
+                                    </label>
+                                </div>
+                                <div class="notification-dropdown-list" data-notifications-list>
+                                    <div class="notification-empty">Новых уведомлений нет</div>
+                                </div>
+                                <div class="notification-dropdown-actions">
+                                    <button class="button ghost" type="button" data-notifications-read-all>Отметить все прочитанными</button>
+                                    <a class="button secondary" href="/profile/notifications/">Все уведомления</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if header_variant != "detail" %}
+                        {% if site_meta.telegram_partnership_username %}
+                            <a class="button secondary nav-auth-button has-icon icon-handshake" href="https://t.me/{{ site_meta.telegram_partnership_username }}" target="_blank" rel="noopener" aria-label="Стать партнером">
+                                <span class="nav-button-label">Стать партнером</span>
+                            </a>
+                        {% else %}
+                            <a class="button secondary nav-auth-button has-icon icon-handshake" href="{% url 'platform:about' %}#partnership" aria-label="Стать партнером">
+                                <span class="nav-button-label">Стать партнером</span>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <a class="button secondary nav-auth-button has-icon icon-user{% if current_page == 'profile' %} is-active{% endif %}" href="{% url 'platform:profile' %}" aria-label="Профиль">
+                            <span class="nav-button-label">Профиль</span>
+                        </a>
+                    {% else %}
+                        <a class="button primary nav-auth-button has-icon icon-login" href="{% url 'platform:login' %}?next={{ request.get_full_path|urlencode }}" aria-label="Войти">
+                            <span class="nav-button-label">Войти</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <button
+        class="nav-toggle"
+        type="button"
+        data-mobile-toggle
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="landing-nav-menu"
+    >
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="mobile-menu-overlay" hidden data-mobile-overlay></div>

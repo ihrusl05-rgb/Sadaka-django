@@ -1,0 +1,93 @@
+{% extends "landing/base.html" %}
+{% load humanize %}
+
+{% block title %}Уведомления · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell notification-page">
+    {% include "landing/_page_shell.html" with section_class="detail-header profile-header-shell" nav_class="profile-nav" %}
+
+    <section class="section landing-section profile-section">
+        {% include "landing/_profile_subnav.html" with profile_section="notifications" %}
+        <div class="landing-section-panel profile-tabs-shell notification-page-shell" data-notification-page data-notification-page-filter="{{ notifications_filter }}">
+            <div class="notification-page-sticky">
+                <div class="profile-panel-head">
+                    <div>
+                        <h1>Уведомления</h1>
+                        <p>Здесь собраны только ваши уведомления: по аккаунту, пожертвованиям, заявкам, модерации и важным действиям на платформе.</p>
+                    </div>
+                    <div class="notification-actions">
+                        <a class="button secondary" href="?filter=all">Все</a>
+                        <button class="button primary" type="button" data-notifications-read-all>Отметить все прочитанными</button>
+                    </div>
+                </div>
+
+                <div class="notification-page-summary">
+                    <div class="notification-summary-card" data-notification-summary="unread">
+                        <strong>{{ notifications_unread_count }}</strong>
+                        <span>Непрочитанных сейчас</span>
+                    </div>
+                    <div class="notification-summary-card" data-notification-summary="read">
+                        <strong>{{ notifications_read_count }}</strong>
+                        <span>Уже прочитано</span>
+                    </div>
+                    <div class="notification-summary-card" data-notification-summary="important">
+                        <strong>{{ notifications_important_count }}</strong>
+                        <span>Важных уведомлений</span>
+                    </div>
+                    <div class="notification-summary-card" data-notification-summary="total">
+                        <strong>{{ notifications_total_count }}</strong>
+                        <span>Всего в вашем аккаунте</span>
+                    </div>
+                </div>
+
+                <div class="notification-filter-row">
+                    <a class="notification-filter{% if notifications_filter == 'all' %} is-active{% endif %}" href="?filter=all">Все</a>
+                    <a class="notification-filter{% if notifications_filter == 'unread' %} is-active{% endif %}" href="?filter=unread">Непрочитанные</a>
+                    <a class="notification-filter{% if notifications_filter == 'read' %} is-active{% endif %}" href="?filter=read">Прочитанные</a>
+                    <a class="notification-filter{% if notifications_filter == 'important' %} is-active{% endif %}" href="?filter=important">Важные</a>
+                </div>
+            </div>
+
+            <div class="notification-page-list" data-notification-page-list>
+                {% for item in notifications_list %}
+                    <article class="notification-card notification-item notification-item--{{ item.notification_type }}{% if not item.is_read %} notification-item--unread{% endif %}" data-notification-id="{{ item.id }}">
+                        <div class="notification-card-head">
+                            <div>
+                                <div class="notification-card-kicker">{{ item.get_notification_type_display }}</div>
+                                <h3>{{ item.title }}</h3>
+                            </div>
+                            <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"d.m.Y H:i" }}</time>
+                        </div>
+                        <p>{{ item.message }}</p>
+                        <div class="notification-card-foot">
+                            <span class="notification-event">{{ item.event }}</span>
+                            <div class="notification-actions">
+                                {% if item.link %}
+                                    <a class="button secondary" href="{{ item.link }}" data-notification-link data-notification-id="{{ item.id }}">Открыть</a>
+                                {% endif %}
+                                {% if not item.is_read %}
+                                    <button class="button ghost" type="button" data-notification-read data-notification-id="{{ item.id }}">Прочитано</button>
+                                {% endif %}
+                                <button class="button ghost danger" type="button" data-notification-delete data-notification-id="{{ item.id }}">Удалить</button>
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-card" data-notification-empty-state>
+                        {% if notifications_filter == "read" %}
+                            Прочитанных уведомлений пока нет.
+                        {% elif notifications_filter == "unread" %}
+                            Непрочитанных уведомлений сейчас нет.
+                        {% elif notifications_filter == "important" %}
+                            Важных уведомлений сейчас нет.
+                        {% else %}
+                            Уведомлений пока нет.
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

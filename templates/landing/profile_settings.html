@@ -1,0 +1,175 @@
+{% extends "landing/base.html" %}
+
+{% block title %}Настройки профиля · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell profile-page-shell">
+    {% include "landing/_page_shell.html" with section_class="detail-header profile-header-shell" nav_class="profile-nav" %}
+
+    <section class="section landing-section profile-section">
+        {% include "landing/_profile_subnav.html" %}
+
+        {% if messages %}
+            <div class="message-stack">
+                {% for message in messages %}
+                    <div class="message success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="landing-section-panel profile-settings-hero">
+            <div>
+                <div class="profile-eyebrow">Настройки</div>
+                <h1>Управление профилем и доступом</h1>
+                <p>Здесь собраны личные данные, контакты, Telegram-статус и параметры доступа к аккаунту. Главная страница кабинета остаётся обзорной и не перегружена формами.</p>
+            </div>
+            <a class="button secondary" href="{% url 'platform:profile' %}">Вернуться в обзор</a>
+        </div>
+
+        <div class="profile-settings-layout">
+            <div class="landing-section-panel profile-settings-panel profile-settings-panel--wide">
+                <div class="profile-panel-head">
+                    <div>
+                        <h2>Уведомления и доступ</h2>
+                        <p>Основные действия по уведомлениям, Telegram и входу собраны выше, чтобы страница не растягивалась без необходимости.</p>
+                    </div>
+                </div>
+                <div class="profile-settings-status-grid profile-settings-status-grid--stacked">
+                    <div class="profile-settings-status-card">
+                        <strong>Управление уведомлениями</strong>
+                        <p>Откройте отдельный раздел уведомлений, чтобы посмотреть события по аккаунту, пожертвованиям и модерации. Удаление и отметка как прочитано доступны прямо там и в свежих событиях.</p>
+                        <div class="profile-settings-inline-actions">
+                            <a class="button secondary" href="/profile/notifications/">Открыть уведомления</a>
+                            <a class="button ghost" href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Связаться с поддержкой</a>
+                        </div>
+                    </div>
+
+                    <div class="profile-settings-status-card profile-settings-status-card--telegram">
+                        <strong>{% if telegram_profile %}Telegram привязан{% else %}Telegram не привязан{% endif %}</strong>
+                        <p>
+                            {% if telegram_profile %}
+                                {% if telegram_profile.username %}
+                                    Аккаунт {{ telegram_profile.display_name }} подключён{% if telegram_profile.linked_at %} с {{ telegram_profile.linked_at|date:"d.m.Y" }}{% endif %} и может получать коды входа и уведомления.
+                                {% else %}
+                                    Аккаунт Telegram подключён{% if telegram_profile.linked_at %} с {{ telegram_profile.linked_at|date:"d.m.Y" }}{% endif %} и может получать коды входа и уведомления.
+                                {% endif %}
+                            {% else %}
+                                Подключите Telegram, чтобы получать коды входа и уведомления по заявкам.
+                            {% endif %}
+                        </p>
+                        <div class="profile-settings-inline-actions">
+                            {% if telegram_profile %}
+                                <a class="button secondary" href="{{ site_meta.auth_bot_url }}" target="_blank" rel="noopener">Открыть Telegram-бота</a>
+                            {% else %}
+                                <form method="post" action="{% url 'platform:profile-telegram-connect' %}" class="profile-inline-form" target="_blank">
+                                    {% csrf_token %}
+                                    <button class="button secondary" type="submit">Привязать Telegram</button>
+                                </form>
+                            {% endif %}
+                            <a class="button ghost" href="{{ site_meta.auth_bot_url }}" target="_blank" rel="noopener">Открыть бота</a>
+                        </div>
+                        {% if not telegram_profile %}
+                            <div class="field-help">Кнопка откроет Telegram в новой вкладке. Если бот пишет, что этот Telegram уже привязан к другому аккаунту Sadaka, значит у вас есть второй аккаунт или старый Telegram-only профиль, и нужно завершить перенос привязки через этот же Telegram.</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-settings-status-card">
+                        <strong>Вход по email и паролю</strong>
+                        <p>{% if profile_has_usable_password %}У этого аккаунта уже включён обычный вход по email и паролю.{% else %}Сейчас у аккаунта нет отдельного пароля. Ниже можно задать его для обычного входа без Telegram.{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="landing-section-panel profile-settings-panel profile-settings-panel--wide">
+                <div class="profile-panel-head">
+                    <div>
+                        <h2>Личные и контактные данные</h2>
+                        <p>Обновите имя, телефон и электронную почту для уведомлений и квитанций.</p>
+                    </div>
+                </div>
+
+                <form method="post" class="profile-settings-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="profile">
+                    {% if profile_form.non_field_errors %}
+                        <div class="message error">{{ profile_form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="profile-fields-grid profile-fields-grid--settings">
+                        <div class="field">
+                            <label for="{{ profile_form.last_name.id_for_label }}">Фамилия</label>
+                            {{ profile_form.last_name }}
+                            {% for error in profile_form.last_name.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="field">
+                            <label for="{{ profile_form.first_name.id_for_label }}">Имя</label>
+                            {{ profile_form.first_name }}
+                            {% for error in profile_form.first_name.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="field">
+                            <label for="{{ profile_form.middle_name.id_for_label }}">Отчество</label>
+                            {{ profile_form.middle_name }}
+                            {% for error in profile_form.middle_name.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="field">
+                            <label for="{{ profile_form.phone.id_for_label }}">Телефон</label>
+                            {{ profile_form.phone }}
+                            {% for error in profile_form.phone.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="field field-span-2">
+                            <label for="{{ profile_form.email.id_for_label }}">Электронная почта</label>
+                            {{ profile_form.email }}
+                            {% for error in profile_form.email.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="profile-form-actions">
+                        <button class="button primary profile-submit-button" type="submit">Сохранить данные</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="landing-section-panel profile-settings-panel profile-settings-panel--wide">
+                <div class="profile-panel-head">
+                    <div>
+                        <h2>Смена пароля</h2>
+                        <p>{% if profile_has_usable_password %}Для обычного email-входа можно обновить пароль прямо здесь.{% else %}Если вы входили только через Telegram, здесь можно задать первый пароль для аккаунта.{% endif %}</p>
+                    </div>
+                </div>
+
+                <form method="post" class="profile-settings-form profile-settings-form--compact">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="password">
+                    {% if password_form.non_field_errors %}
+                        <div class="message error">{{ password_form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="profile-fields-grid profile-fields-grid--single profile-fields-grid--password">
+                        {% if profile_has_usable_password %}
+                            <div class="field">
+                                <label for="{{ password_form.current_password.id_for_label }}">Текущий пароль</label>
+                                {{ password_form.current_password }}
+                                {% for error in password_form.current_password.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="field">
+                            <label for="{{ password_form.new_password.id_for_label }}">Новый пароль</label>
+                            {{ password_form.new_password }}
+                            {% for error in password_form.new_password.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="field">
+                            <label for="{{ password_form.new_password_confirm.id_for_label }}">Повторите пароль</label>
+                            {{ password_form.new_password_confirm }}
+                            {% for error in password_form.new_password_confirm.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="profile-form-actions">
+                        <button class="button primary profile-submit-button" type="submit">Обновить пароль</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

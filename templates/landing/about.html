@@ -1,0 +1,92 @@
+{% extends "landing/base.html" %}
+{% load static humanize %}
+
+{% block title %}О нас · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell">
+    {% include "landing/_page_shell.html" with section_id="top" %}
+
+    <section class="section landing-section">
+        <div class="landing-section-panel about-hero-panel">
+            <div class="about-nav-pills" role="navigation" aria-label="Разделы страницы О нас">
+                <a class="about-nav-pill" href="#project">О платформе</a>
+                <a class="about-nav-pill" href="#partnership">Сотрудничество</a>
+            </div>
+            <div class="about-hero-grid">
+                <div class="about-hero-copy">
+                    <h1 class="about-hero-title">
+                        <span>Сервис прозрачной</span>
+                        <span>помощи мечетям</span>
+                    </h1>
+                    <p>Садака Джария — это платформа для поддержки мечетей, благотворительных инициатив и проектов садака джария с прозрачной системой пожертвований и открытой отчетностью.</p>
+                    <div class="about-stat-grid">
+                        <article class="about-stat-card">
+                            <strong>{{ stats.mosques_total|intcomma }}</strong>
+                            <span>мечетей в каталоге</span>
+                        </article>
+                        <article class="about-stat-card">
+                            <strong>{{ stats.total_collected|floatformat:0|intcomma }} ₽</strong>
+                            <span>публично собрано</span>
+                        </article>
+                        <article class="about-stat-card">
+                            <strong>{{ stats.donors_today|intcomma }}</strong>
+                            <span>жертвователей сегодня</span>
+                        </article>
+                    </div>
+                </div>
+                <div class="about-hero-media">
+                    <img src="{% static 'landing/about/about-hero.png' %}" alt="Садака Джария" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section landing-section" id="project">
+        <div class="landing-section-panel">
+            <div class="section-head landing-section-head">
+                <h2>О платформе</h2>
+                <p>Платформа создана, чтобы сделать помощь мечетям простой, безопасной и понятной для каждого мусульманина — без сложных действий и непрозрачных сборов.</p>
+            </div>
+            <div class="info-card-grid about-values-grid">
+                <article class="info-card">
+                    <h3>Прозрачность</h3>
+                    <p>Каждая мечеть и проект имеют публичную страницу с информацией о сборах, целях и активности пожертвований.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Простота</h3>
+                    <p>Найти мечеть, выбрать проект и совершить садака можно всего за несколько минут.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Регулярная поддержка</h3>
+                    <p>Поддерживайте мечети разовыми пожертвованиями или подключайте ежемесячную помощь для постоянного блага.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section muted landing-section" id="partnership">
+        <div class="landing-section-panel about-partnership-panel">
+            <div class="section-head landing-section-head">
+                <h2>Сотрудничество</h2>
+                <p>Мы открыты к сотрудничеству с мечетями, исламскими организациями, благотворительными фондами и партнёрами, которые хотят участвовать в развитии благих проектов.</p>
+            </div>
+            <div class="about-partnership-grid">
+                <article class="info-card">
+                    <h3>Для мечетей</h3>
+                    <p>Публичная страница мечети, размещение проектов, прозрачные сборы и удобная система поддержки для жертвователей.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Для партнёров</h3>
+                    <p>Совместные инициативы, развитие инфраструктуры помощи, информационная поддержка и интеграции с платформой.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Единый центр поддержки</h3>
+                    <p>По вопросам сотрудничества, подключения мечетей и работы платформы:</p>
+                    <p><a class="about-support-link" href="https://t.me/sadaka_support_bot" target="_blank" rel="noopener">@sadaka_support_bot</a></p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

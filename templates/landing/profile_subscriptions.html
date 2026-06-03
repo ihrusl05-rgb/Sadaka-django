@@ -1,0 +1,45 @@
+{% extends "landing/base.html" %}
+{% load humanize %}
+
+{% block title %}Подписки · Садака Джария{% endblock %}
+
+{% block content %}
+<div class="page-shell landing-shell inner-page-shell profile-page-shell">
+    {% include "landing/_page_shell.html" with section_class="detail-header profile-header-shell" nav_class="profile-nav" %}
+
+    <section class="section landing-section profile-section">
+        {% include "landing/_profile_subnav.html" %}
+
+        <div class="landing-section-panel profile-dashboard-panel profile-dashboard-panel--history">
+            <div class="profile-panel-head">
+                <div>
+                    <div class="profile-eyebrow">Подписки</div>
+                    <h1>Регулярная помощь</h1>
+                    <p>Все активные ежемесячные подписки, ближайшие списания и текущие статусы.</p>
+                </div>
+            </div>
+
+            <div class="profile-list">
+                {% for subscription in profile_subscriptions %}
+                    <article class="profile-list-card">
+                        <div class="profile-list-main">
+                            <div class="profile-list-title-row">
+                                <strong>{{ subscription.mosque_name }}</strong>
+                                <span class="profile-list-value profile-value-money">{{ subscription.amount|floatformat:0|intcomma }} ₽ / мес.</span>
+                            </div>
+                            <span class="profile-list-subtitle">{{ subscription.project_title|default:"Общий фонд мечети" }}</span>
+                        </div>
+                        <div class="profile-list-meta">
+                            <strong class="profile-status-chip">{{ subscription.status }}</strong>
+                            <span class="profile-list-meta-item">Следующее списание: {{ subscription.next_charge_date|date:"d.m.Y" }}</span>
+                            <span class="profile-list-meta-item">{{ subscription.payment_method }}</span>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-card">Ежемесячная помощь пока не подключена. Когда появится первая подписка, она отобразится здесь.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

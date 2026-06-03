@@ -1,0 +1,121 @@
+{% extends "landing/base.html" %}
+
+{% block title %}Намаз · Садака Джария{% endblock %}
+
+{% block content %}
+<div
+    class="page-shell landing-shell inner-page-shell"
+    data-namaz-root
+    data-namaz-search-url="{% url 'platform:namaz-search' %}"
+    data-namaz-locate-url="{% url 'platform:namaz-locate' %}"
+    data-namaz-data-url="{% url 'platform:namaz-data' %}"
+>
+    {% include "landing/_page_shell.html" with section_id="top" %}
+
+    <section class="section landing-section">
+        <div class="landing-section-panel namaz-hero-panel">
+            <div class="namaz-hero-grid">
+                <div class="section-head landing-section-head namaz-section-head">
+                    <div class="section-kicker">Время намаза по вашему городу</div>
+                    <h1>Намаз</h1>
+                    <p>Выберите свой город или разрешите геолокацию, и мы сразу покажем актуальное время намаза на сегодня, ближайший намаз и расписание на месяц.</p>
+                    <div class="namaz-search-shell">
+                        <div class="namaz-search-row">
+                            <label class="sr-only" for="namaz-city-search">Поиск города</label>
+                            <input
+                                id="namaz-city-search"
+                                class="namaz-search-input"
+                                type="search"
+                                placeholder="Введите город, например Казань"
+                                autocomplete="off"
+                                data-namaz-city-input
+                            >
+                            <button class="button primary" type="button" data-namaz-locate>Определить мой город</button>
+                        </div>
+                        <div class="namaz-popular-cities" aria-label="Популярные города">
+                            <button class="button secondary namaz-city-chip" type="button" data-namaz-city-chip data-city="Москва" data-region="" data-country="Россия" data-country-code="RU" data-lat="55.7558" data-lon="37.6176">Москва</button>
+                            <button class="button secondary namaz-city-chip" type="button" data-namaz-city-chip data-city="Казань" data-region="Татарстан" data-country="Россия" data-country-code="RU" data-lat="55.7946" data-lon="49.1115">Казань</button>
+                            <button class="button secondary namaz-city-chip" type="button" data-namaz-city-chip data-city="Уфа" data-region="Башкортостан" data-country="Россия" data-country-code="RU" data-lat="54.7388" data-lon="55.9721">Уфа</button>
+                            <button class="button secondary namaz-city-chip" type="button" data-namaz-city-chip data-city="Махачкала" data-region="Дагестан" data-country="Россия" data-country-code="RU" data-lat="42.9849" data-lon="47.5047">Махачкала</button>
+                            <button class="button secondary namaz-city-chip" type="button" data-namaz-city-chip data-city="Грозный" data-region="Чеченская Республика" data-country="Россия" data-country-code="RU" data-lat="43.3178" data-lon="45.6949">Грозный</button>
+                        </div>
+                        <div class="namaz-search-results" data-namaz-search-results hidden></div>
+                        <p class="namaz-search-note" data-namaz-status aria-live="polite">Можно выбрать город вручную или определить его автоматически по вашему местоположению.</p>
+                    </div>
+                </div>
+                <aside class="namaz-summary-card">
+                    <div class="namaz-summary-kicker">Текущий город</div>
+                    <div class="namaz-summary-city" data-namaz-city-label>Определяем…</div>
+                    <div class="namaz-summary-dates">
+                        <div>
+                            <span>Сегодня</span>
+                            <strong data-namaz-gregorian-date>—</strong>
+                        </div>
+                        <div>
+                            <span>Хиджра</span>
+                            <strong data-namaz-hijri-date>—</strong>
+                        </div>
+                    </div>
+                    <div class="namaz-summary-next">
+                        <span>Следующий намаз</span>
+                        <strong data-namaz-next-prayer>—</strong>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="section landing-section">
+        <div class="namaz-content-grid">
+            <div class="landing-section-panel namaz-times-panel">
+                <div class="section-head landing-section-head">
+                    <div class="section-kicker">Ежедневное расписание</div>
+                    <h2>Время намаза на сегодня</h2>
+                    <p>Показываем время намаза на сегодня именно для выбранного города, чтобы расписание было под рукой в любой момент.</p>
+                </div>
+                <div class="namaz-prayer-grid" data-namaz-prayer-grid>
+                    <article class="namaz-prayer-card"><span>Фаджр</span><strong>—</strong></article>
+                    <article class="namaz-prayer-card"><span>Восход</span><strong>—</strong></article>
+                    <article class="namaz-prayer-card"><span>Зухр</span><strong>—</strong></article>
+                    <article class="namaz-prayer-card"><span>Аср</span><strong>—</strong></article>
+                    <article class="namaz-prayer-card"><span>Магриб</span><strong>—</strong></article>
+                    <article class="namaz-prayer-card"><span>Иша</span><strong>—</strong></article>
+                </div>
+                <div class="namaz-footnote">
+                    Время рассчитывается по выбранному городу. В отдельных мечетях оно может немного отличаться в зависимости от местного расписания.
+                </div>
+            </div>
+
+            <div class="landing-section-panel namaz-calendar-panel">
+                <div class="section-head landing-section-head">
+                    <div class="section-kicker">Исламский календарь</div>
+                    <h2>Ближайшие важные даты</h2>
+                    <p>Здесь показаны три ближайшие значимые даты мусульманского календаря, чтобы было проще ориентироваться заранее.</p>
+                </div>
+                <div class="namaz-calendar-list" data-namaz-calendar-list>
+                    <article class="namaz-calendar-item">
+                        <strong>Смотрим ближайшие даты</strong>
+                        <span>Сейчас подберём для вас важные дни исламского календаря.</span>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section landing-section">
+        <div class="landing-section-panel namaz-month-panel">
+            <div class="section-head landing-section-head">
+                <div class="section-kicker">Полный месяц</div>
+                <h2>Время намаза на все даты</h2>
+                <p>Ниже собрано полное расписание на текущий месяц по выбранному городу: все основные времена намаза на каждый день.</p>
+            </div>
+            <div class="namaz-month-summary" data-namaz-month-summary>
+                Выберите город, и мы покажем расписание на весь месяц.
+            </div>
+            <div class="namaz-month-table-shell" data-namaz-month-shell>
+                <div class="namaz-month-empty">После выбора города здесь появится расписание на весь месяц.</div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

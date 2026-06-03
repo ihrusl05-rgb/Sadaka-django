@@ -1,0 +1,41 @@
+{% load static %}
+<footer class="footer premium-footer" id="footer">
+    <div class="footer-inner premium-footer-inner">
+        <div class="footer-brand-card">
+            <div class="footer-brand-head">
+                <span class="footer-brand-mark">
+                    <img src="{% static 'branding/sj-brand-mark.png' %}?v=20260516-41" alt="" aria-hidden="true" draggable="false" data-protected-media>
+                </span>
+                <div>
+                    <div class="footer-brand-title">{{ site_meta.brand_name }}</div>
+                    <p class="footer-brand-copy">Платформа для поддержки мечетей и благих проектов с прозрачными пожертвованиями и открытой отчетностью.</p>
+                </div>
+            </div>
+            <div class="footer-meta">
+                <div class="footer-meta-line">© {% now "Y" %} {{ site_meta.brand_name }}</div>
+            </div>
+        </div>
+
+        <div class="footer-links premium-footer-links">
+            <div class="footer-link-column">
+                <h3>Навигация</h3>
+                <a href="{% url 'platform:landing' %}">Главная</a>
+                <a href="{% url 'platform:mosques' %}">Мечети</a>
+                <a href="{% url 'platform:namaz' %}">Намаз</a>
+                <a href="{% url 'platform:help' %}">Помощь</a>
+                <a href="{% url 'platform:about' %}">О нас</a>
+            </div>
+            <div class="footer-link-column">
+                <h3>Поддержка</h3>
+                <a href="{% url 'platform:guest-subscription' %}">Ежемесячная поддержка</a>
+                <a href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Стать партнером</a>
+            </div>
+            <div class="footer-link-column">
+                <h3>Контакты</h3>
+                <a href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Поддержка</a>
+                <a href="{{ site_meta.support_bot_url }}" target="_blank" rel="noopener">Администратор</a>
+                <a href="{% url 'platform:landing' %}">Политика конф-ти</a>
+            </div>
+        </div>
+    </div>
+</footer>
