@@ -32,13 +32,11 @@ Django-проект для сбора пожертвований мечетям.
 - `config/` - настройки проекта, URL и Celery
 - `apps/` - основные Django-приложения
 - `bot/` - Telegram-боты для входа и поддержки
-- `common/` - общие permissions, mixins, middleware и утилиты
+- `common/` - общий код, который используется в разных приложениях
 - `templates/landing/` - публичные HTML-страницы
 - `static/landing/` - стили, JS и изображения публичной части
 - `tests/` - тесты на pytest
-- `docs/` - рабочая документация по проекту
 
-Подробное описание админки и публичных страниц находится в [docs/admin-public-manual.md](docs/admin-public-manual.md).
 
 ## Локальный запуск
 
