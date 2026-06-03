@@ -178,7 +178,3 @@ python manage.py spectacular --file schema.yml
 python -m bot.auth_bot
 python -m bot.support_bot
 ```
-
-`support_bot` использует Redis для временного состояния админских ответов. Логи по умолчанию пишутся в `var/bot/logs`.
-
-
